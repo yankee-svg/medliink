@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  src: url("/fonts/BricolageGrotesque-Regular-BF648bd5781d794.otf");
+  font-family: Bricolage;
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+html body {
+  font-family: Bricolage !important;
+  scroll-behavior: smooth;
+}
