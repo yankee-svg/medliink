@@ -23,7 +23,7 @@ const user: any =
 
 const socketServerUrl =
   process.env.NEXT_PUBLIC_BASE_SOCKET_URL ||
-  "https://medliink-api.onrender.com";
+  "https://medliink-api.onrender.com/";
 
 export const socket = io(socketServerUrl, {
   withCredentials: true,
