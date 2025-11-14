@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Confetti from "react-confetti";
 import Seo from "@/app/components/Seo/Seo";
+import { Suspense } from "react";
 
-const Verification = () => {
+const VerificationContent = () => {
   const searchParams = useSearchParams();
   const success = searchParams.get("success");
   const message = searchParams.get("message");
@@ -16,11 +17,6 @@ const Verification = () => {
 
   return (
     <>
-      <Seo
-        title="Verify"
-        description="Verify your medliink account"
-        keywords="verify account, account verification"
-      />
       {success == "true" && (
         <Confetti height={window?.innerHeight!} width={window?.innerWidth!} />
       )}
@@ -50,6 +46,23 @@ const Verification = () => {
           </>
         )}
       </div>
+    </>
+  );
+};
+
+const Verification = () => {
+  return (
+    <>
+      <Seo
+        title="Verify"
+        description="Verify your medliink account"
+        keywords="verify account, account verification"
+      />
+      <Suspense fallback={<div className="w-screen h-screen flex items-center justify-center">
+        <div className="text-accent text-xl">Loading verification status...</div>
+      </div>}>
+        <VerificationContent />
+      </Suspense>
     </>
   );
 };

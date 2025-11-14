@@ -12,7 +12,7 @@ import {
   saveCurrentTypingMessage,
   currentTypingMessaageProps,
 } from "@/app/store/slices/user.slice";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import Loader from "@/app/components/Loader";
 import { useAppSelector } from "@/app/store/store";
 import { socket } from "@/app/store/middlewares/socket";
@@ -22,7 +22,7 @@ import { AppDispatch } from "@/app/store/store";
 import { currentTime, currentMongoTime } from "@/app/helpers";
 import Seo from "@/app/components/Seo/Seo";
 
-const Messages = () => {
+const MessagesContent = () => {
   const searchParams = useSearchParams();
   const messageInputRef = useRef<HTMLDivElement | any>(null);
   const router = useRouter();
@@ -144,6 +144,136 @@ const Messages = () => {
   };
 
   return (
+    <div className="w-screen h-screen bg-zinc-50">
+      {hospitalDataLoading || roomIdLoading ? (
+        <Loader />
+      ) : isError ? (
+        <section className="w-full flex items-center flex-col ">
+          <Text className="my-5">Couldn't get hospital details 😥</Text>
+          <section className="my-5">
+            <Button onClick={viewOnlineHospitals}>Online Hospitals</Button>
+          </section>
+        </section>
+      ) : (
+        <SidebarLayout>
+          <section className="my-5">
+            <section className="messages-section my-5 w-full lg:w-1/2 lg:mx-auto">
+              <section className="user-details flex items-center w-full justify-between p-1">
+                <section className="first-section flex items-center gap-x-5">
+                  <div className="avatar online">
+                    <div className="w-12 rounded-full">
+                      <img
+                        src={fetchedHospitalData?.profilePicture}
+                        alt="hospital profile image"
+                      />
+                    </div>
+                  </div>
+
+                  <Text className="font-semibold">
+                    {fetchedHospitalData?.clinicName}
+                  </Text>
+                </section>
+
+                <section className="second-section px-4">
+                  <NetworkStatus />
+                </section>
+              </section>
+              <section className="status-tab w-full items-center justify-center my-5">
+                <Text className="text-[13px] text-center text-accent font-bold">
+                  {currentTypingMessage?.message}
+                </Text>
+              </section>
+              <section className="h-screen w-full flex flex-col">
+                <div className="flex-grow">
+                  {messages.length == 0 ? (
+                    <Text className="font-bold text-center text-sm text-accent">
+                      You've no messages with{" "}
+                      {fetchedHospitalData?.clinicName}{" "}
+                    </Text>
+                  ) : (
+                    messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`mb-4 ${
+                          message?.sender === userDashboardInfo?._id
+                            ? "sender"
+                            : "receiver"
+                        }`}
+                        ref={messageInputRef}
+                      >
+                        <div
+                          className={`max-w-[70%] ${
+                            message?.sender === userDashboardInfo?._id
+                              ? "bg-purple-200"
+                              : "bg-slate-100"
+                          } p-2 rounded-md ml-${
+                            message?.sender === userDashboardInfo?._id
+                              ? "auto"
+                              : "0"
+                          } break-words`}
+                        >
+                          {message?.message}
+                          <Text className="block text-[12px] text-right p-0 m-0">
+                            {message?.createdAt
+                              ? currentMongoTime(message?.createdAt!)
+                              : currentTime()}
+                          </Text>
+                        </div>
+                      </div>
+                    ))
+                  )}
+
+                  <div className="breaker my-5"></div>
+
+                  <form
+                    className="w-full my-8 flex flex-col items-center justify-center p-1 mb-10"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="relative w-full ">
+                      <textarea
+                        placeholder="Type a message..."
+                        rows={1}
+                        spellCheck="false"
+                        name="typedMessage"
+                        value={formData.typedMessage}
+                        onChange={handleInputChange}
+                        tabIndex={0}
+                        onKeyDown={handleKeyPress}
+                        className="w-full outline-none border-2 border-purple-300 focus:border-accent hover:border-accent transition-all duration-150 ease-in p-4 rounded-[30px] block"
+                      />
+                      <button className="absolute top-1/2 right-3 transform -translate-y-1/2 px-5 rounded-full">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          className="text-accent"
+                        >
+                          <path
+                            d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </section>
+            </section>
+          </section>
+        </SidebarLayout>
+      )}
+    </div>
+  );
+};
+
+const Messages = () => {
+  const [fetchedHospitalData, setFetchedHospitalData] = useState<hospitalProps>();
+
+  return (
     <>
       <Seo
         title={`Message with ${
@@ -152,129 +282,11 @@ const Messages = () => {
             : "hospital"
         }`}
       />
-      <div className="w-screen h-screen bg-zinc-50">
-        {hospitalDataLoading || roomIdLoading ? (
-          <Loader />
-        ) : isError ? (
-          <section className="w-full flex items-center flex-col ">
-            <Text className="my-5">Couldn't get hospital details 😥</Text>
-            <section className="my-5">
-              <Button onClick={viewOnlineHospitals}>Online Hospitals</Button>
-            </section>
-          </section>
-        ) : (
-          <SidebarLayout>
-            <section className="my-5">
-              <section className="messages-section my-5 w-full lg:w-1/2 lg:mx-auto">
-                <section className="user-details flex items-center w-full justify-between p-1">
-                  <section className="first-section flex items-center gap-x-5">
-                    <div className="avatar online">
-                      <div className="w-12 rounded-full">
-                        <img
-                          src={fetchedHospitalData?.profilePicture}
-                          alt="hospital profile image"
-                        />
-                      </div>
-                    </div>
-
-                    <Text className="font-semibold">
-                      {fetchedHospitalData?.clinicName}
-                    </Text>
-                  </section>
-
-                  <section className="second-section px-4">
-                    <NetworkStatus />
-                  </section>
-                </section>
-                <section className="status-tab w-full items-center justify-center my-5">
-                  <Text className="text-[13px] text-center text-accent font-bold">
-                    {currentTypingMessage?.message}
-                  </Text>
-                </section>
-                <section className="h-screen w-full flex flex-col">
-                  <div className="flex-grow">
-                    {messages.length == 0 ? (
-                      <Text className="font-bold text-center text-sm text-accent">
-                        You've no messages with{" "}
-                        {fetchedHospitalData?.clinicName}{" "}
-                      </Text>
-                    ) : (
-                      messages.map((message, index) => (
-                        <div
-                          key={index}
-                          className={`mb-4 ${
-                            message?.sender === userDashboardInfo?._id
-                              ? "sender"
-                              : "receiver"
-                          }`}
-                          ref={messageInputRef}
-                        >
-                          <div
-                            className={`max-w-[70%] ${
-                              message?.sender === userDashboardInfo?._id
-                                ? "bg-purple-200"
-                                : "bg-slate-100"
-                            } p-2 rounded-md ml-${
-                              message?.sender === userDashboardInfo?._id
-                                ? "auto"
-                                : "0"
-                            } break-words`}
-                          >
-                            {message?.message}
-                            <Text className="block text-[12px] text-right p-0 m-0">
-                              {message?.createdAt
-                                ? currentMongoTime(message?.createdAt!)
-                                : currentTime()}
-                            </Text>
-                          </div>
-                        </div>
-                      ))
-                    )}
-
-                    <div className="breaker my-5"></div>
-
-                    <form
-                      className="w-full my-8 flex flex-col items-center justify-center p-1 mb-10"
-                      onSubmit={handleSubmit}
-                    >
-                      <div className="relative w-full ">
-                        <textarea
-                          placeholder="Type a message..."
-                          rows={1}
-                          spellCheck="false"
-                          name="typedMessage"
-                          value={formData.typedMessage}
-                          onChange={handleInputChange}
-                          tabIndex={0}
-                          onKeyDown={handleKeyPress}
-                          className="w-full outline-none border-2 border-purple-300 focus:border-accent hover:border-accent transition-all duration-150 ease-in p-4 rounded-[30px] block"
-                        />
-                        <button className="absolute top-1/2 right-3 transform -translate-y-1/2 px-5 rounded-full">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            className="text-accent"
-                          >
-                            <path
-                              d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
-                              fill="currentColor"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </form>
-                    <br />
-                    <br />
-                    <br />
-                  </div>
-                </section>
-              </section>
-            </section>
-          </SidebarLayout>
-        )}
-      </div>
+      <Suspense fallback={<div className="w-screen h-screen flex items-center justify-center">
+        <Loader />
+      </div>}>
+        <MessagesContent />
+      </Suspense>
     </>
   );
 };

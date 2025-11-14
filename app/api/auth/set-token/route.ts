@@ -18,7 +18,8 @@ export const POST = async (request: Request) => {
       );
     }
 
-    cookies().set("next_refresh_token", token, {
+    const cookieStore = await cookies();
+    cookieStore.set("next_refresh_token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",

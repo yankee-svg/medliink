@@ -3,7 +3,8 @@ import { cookies } from "next/headers";
 
 export const POST = async (request: Request) => {
   try {
-    cookies().delete("next_refresh_token");
+    const cookieStore = await cookies();
+    cookieStore.delete("next_refresh_token");
 
     return NextResponse.json({ message: "Cookie removed successfully" });
   } catch (error) {
