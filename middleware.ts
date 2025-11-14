@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -14,9 +13,7 @@ export async function middleware(request: NextRequest) {
     path === "/auth/verified" ||
     path === "/auth/reset-password";
 
-  const token =
-    request.cookies.get("next_refresh_token")?.value ||
-    cookies().get("next_refresh_token")?.value;
+  const token = request.cookies.get("next_refresh_token")?.value;
   const tokenData: any = token && jwt.decode(token!);
 
   console.log(`Cookie token is ${token}`);
