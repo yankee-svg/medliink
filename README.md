@@ -1,5 +1,8 @@
 # Medliink: Healthcare managment system
 
+test user: emerybarame60@gmail.com
+pass: 321123
+
 ## Executive Summary
 
 Medliink is a [prototype](vercel.app.lomk) healthcare management plaform. its a full stack web app designed to modernize the intersection of healthcare delivery and digital technology. By providing comprehensive solutions for both healthcare providers and patients, Medliink addresses critical inefficiencies in healthcare administration, appointment management, and patient engagement. The platform leverages cutting-edge web technologies and artificial intelligence to create a seamless, user-centric healthcare ecosystem that improves accessibility, operational efficiency, and quality of care.

@@ -24,16 +24,16 @@ const Navbar: React.FC = (): JSX.Element => {
   const navItemsClassname= "h-6 w-6 text-accent transition-color hover:text-secondary"
   const navItems = [
     {
-      link: "https://github.com/adedoyin-emmanuel/medliink",
+      link: "https://github.com/yankee-svg/medliink",
       element: <FiGithub className={navItemsClassname} />,
     },
 
     {
-      link: "https://youtube.com/adedoyin-emmanuel/",
+      link: "https://youtube.com/yankee-svg/",
       element: <FiYoutube className={navItemsClassname} />,
     },
     {
-      link: "https://github.com/Emmysoft_Tm/",
+      link: "https://youtube.com/yankee-svg/",
       element: <FiTwitter className={navItemsClassname} />,
     },
   ];
@@ -90,7 +90,7 @@ const Navbar: React.FC = (): JSX.Element => {
           <Link href="/auth/signup" className="capitalize block  my-6">
             signup
           </Link>
-          <Link href="https://github.com/adedoyin-emmanuel/medliink" className="capitalize flex items-center gap-x-3 my-6">
+          <Link href="https://github.com/yankee-svg/medliink" className="capitalize flex items-center gap-x-3 my-6">
              star project
             <FiGithub className="text-accent"/>
           </Link>

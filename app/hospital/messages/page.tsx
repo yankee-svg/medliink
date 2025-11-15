@@ -34,7 +34,7 @@ const Messages = () => {
                     </div>
                     <div className="message-content">
                       <h2 className="font-bold capitalize flex items-center gap-x-1">
-                        adedoyin emmanuel
+                        Emery Baraame
                         <span>
                           <svg
                             width="18"
