@@ -35,20 +35,33 @@ const Modal = forwardRef<ModalRef, ModalProps>(
     return (
       <dialog
         id={`modal_${ref}`}
-        className={`modal ${className}`}
+        className={`modal ${isOpen ? 'modal-open' : ''} ${className}`}
         open={isOpen}
       >
-        <div className="modal-box">
+        <div className="neu-card max-w-lg mx-auto my-auto">
           <form method="dialog" className="modal-backdrop">
             <button
               onClick={closeModal}
-              className="btn btn-sm btn-circle shadow-none border-none outline-none bg-gray-100 hover:bg-red-400 hover:text-white duration-100 transition-colors ease-linear absolute right-2 top-2"
+              className="neu-pressed absolute right-4 top-4 w-8 h-8 rounded-full flex items-center justify-center text-base-content hover:neu-raised transition-all duration-200"
             >
-              ✕
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M6 18L18 6M6 6l12 12" 
+                />
+              </svg>
             </button>
           </form>
-
-          {children}
+          <div className="mt-4">
+            {children}
+          </div>
         </div>
       </dialog>
     );

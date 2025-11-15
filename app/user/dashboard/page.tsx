@@ -444,30 +444,28 @@ const Home = () => {
                   className={`chat-container w-full ${chatBodyHeight} p-2 overflow-x-hidden overflow-y-clip mb-10`}
                 >
                   {messages.map((msg, index) => (
-                    <>
-                      <div
-                        key={index}
-                        className={`chat ${
-                          msg.sender === "user" ? "chat-end" : "chat-start"
-                        }`}
-                      >
-                        <div className="chat-image avatar">
-                          <div className="w-10 rounded-full">
-                            <img
-                              src={`${
-                                msg.sender === "user"
-                                  ? userInfo?.profilePicture
-                                  : "https://api.dicebear.com/7.x/micah/svg?seed=ai"
-                              }`}
-                              alt={`${msg.sender} image`}
-                            />
-                          </div>
-                        </div>
-                        <div className="chat-bubble bg-white text-black break-words">
-                          {msg.message}
+                    <div
+                      key={index}
+                      className={`chat ${
+                        msg.sender === "user" ? "chat-end" : "chat-start"
+                      }`}
+                    >
+                      <div className="chat-image avatar">
+                        <div className="w-10 rounded-full">
+                          <img
+                            src={`${
+                              msg.sender === "user"
+                                ? userInfo?.profilePicture
+                                : "https://api.dicebear.com/7.x/micah/svg?seed=ai"
+                            }`}
+                            alt={`${msg.sender} image`}
+                          />
                         </div>
                       </div>
-                    </>
+                      <div className="chat-bubble bg-white text-black break-words">
+                        {msg.message}
+                      </div>
+                    </div>
                   ))}
                 </section>
 

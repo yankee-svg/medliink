@@ -47,25 +47,36 @@ const HospitalCard = ({
   const starElements = stars.map((_, index) => (
     <React.Fragment key={index}>
       {index < rating ? (
-        <BsStarFill className="h-5 w-5 text-yellow-500" />
+        <BsStarFill className="h-4 w-4 text-yellow-500" />
       ) : (
-        <BsStar className="h-5 w-5" />
+        <BsStar className="h-4 w-4 opacity-50" />
       )}
     </React.Fragment>
   ));
 
   return (
     <Link href={href}>
-      <section
-        className={`hospital bg-gray-100 transition-colors duration-100 ease-in hover:bg-purple-100 p-3 rounded md:w-96 cursor-pointer ${className}`}
-      >
-        <h2 className="font-bold capitalize flex items-center gap-x-1">
-          {clinicName}
-          <span>{isVerified && <Verified />}</span>
-        </h2>
-        <Text className="text-sm">{address}</Text>
-        <section className="rating flex gap-x-1 my-2">{starElements}</section>
-      </section>
+      <div className={`neu-card-small transition-all duration-300 hover:shadow-lg hover:transform hover:-translate-y-1 cursor-pointer group ${className}`}>
+        <div className="flex items-start justify-between mb-3">
+          <h2 className="neu-text-primary font-bold text-lg group-hover:text-primary transition-colors duration-200">
+            {clinicName}
+          </h2>
+          <span className="flex-shrink-0">{isVerified && <Verified />}</span>
+        </div>
+        
+        <Text className="neu-text-secondary text-sm mb-3 line-clamp-2">
+          {address}
+        </Text>
+        
+        <div className="flex items-center justify-between">
+          <div className="rating flex gap-x-1">
+            {starElements}
+          </div>
+          <span className="neu-text-muted text-xs">
+            {rating.toFixed(1)}
+          </span>
+        </div>
+      </div>
     </Link>
   );
 };
@@ -81,16 +92,22 @@ export const UserCard = ({
 }: UserCardProps) => {
   return (
     <Link href={href}>
-      <section
-        className={`hospital bg-gray-100 transition-colors duration-100 ease-in hover:bg-purple-100 p-3 rounded md:w-96 cursor-pointer ${className}`}
-      >
-        <h2 className="font-bold capitalize flex items-center gap-x-1">
-          {name}
-          <span>{isVerified && <Verified />}</span>
-        </h2>
-        <Text className="text-sm">{address}</Text>
-        <Text className="my-1 text-sm capitalize"> {bio}</Text>
-      </section>
+      <div className={`neu-card-small transition-all duration-300 hover:shadow-lg hover:transform hover:-translate-y-1 cursor-pointer group ${className}`}>
+        <div className="flex items-start justify-between mb-3">
+          <h2 className="neu-text-primary font-bold text-lg group-hover:text-primary transition-colors duration-200">
+            {name}
+          </h2>
+          <span className="flex-shrink-0">{isVerified && <Verified />}</span>
+        </div>
+        
+        <Text className="neu-text-secondary text-sm mb-2 line-clamp-1">
+          {address}
+        </Text>
+        
+        <Text className="neu-text-muted text-sm line-clamp-2">
+          {bio}
+        </Text>
+      </div>
     </Link>
   );
 };

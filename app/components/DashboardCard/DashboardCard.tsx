@@ -47,32 +47,36 @@ const DashboardCard = ({
 
   return (
     <section
-      className={`rounded-lg md:hidden bg-purple-200 gap-y-2 p-4 w-full ${className}`}
+      className={`neu-card transition-all duration-300 hover:shadow-lg hover:transform hover:-translate-y-1 cursor-pointer ${className}`}
     >
-      <section className="header flex items-center justify-between">
-        <section className="first flex items-center gap-x-1">
-          <p className="capitalize text-[12px]">total appoinments</p>
-          <section className="icon-container" onClick={handleIconClick}>
+      <section className="header flex items-center justify-between mb-4">
+        <section className="first flex items-center gap-x-2">
+          <p className="neu-text-secondary text-sm font-medium">total appointments</p>
+          <button 
+            onClick={handleIconClick}
+            className="p-1 rounded-lg neu-pressed transition-all duration-200 hover:neu-raised"
+          >
             {currentIcon}
-          </section>
+          </button>
         </section>
-        <section
-          className="end flex items-center gap-x-1"
+        <button
+          className="end flex items-center gap-x-1 neu-text-secondary text-sm font-medium transition-all duration-200 hover:neu-text-primary"
           onClick={handleHealthcareHistoryClick}
         >
-          <p className="capitalize text-[12px]">healthcare history</p>
-
-          <MdOutlineKeyboardArrowRight />
-        </section>
+          <span>healthcare history</span>
+          <MdOutlineKeyboardArrowRight className="w-4 h-4" />
+        </button>
       </section>
-      <h3 className="text-[18px] font-bold my-2">{totalAppointment || 0}</h3>
+      
+      <h3 className="neu-text-primary text-2xl font-bold mb-6">{totalAppointment || 0}</h3>
+      
       <section
         className="w-full flex items-end justify-end"
         onClick={appointmentButtonClick}
       >
-        <section className="new-appointment bg-accent rounded-[30px] capitalize w-28 text-[12px] text-center p-1  text-white">
+        <div className="neu-raised px-6 py-2 text-sm font-medium neu-text-primary rounded-full capitalize transition-all duration-200 hover:transform hover:-translate-y-0.5 hover:shadow-lg cursor-pointer">
           appointment
-        </section>
+        </div>
       </section>
     </section>
   );

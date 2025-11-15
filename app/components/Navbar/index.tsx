@@ -21,33 +21,41 @@ const Navbar: React.FC = (): JSX.Element => {
     setNavToggled(!navToggled);
   };
 
-  const navItemsClassname= "h-6 w-6 text-accent transition-color hover:text-secondary"
+  const navItemsClassname= "neu-pressed p-2 rounded-lg text-base-content transition-all duration-200 hover:neu-raised hover:text-primary"
   const navItems = [
     {
       link: "https://github.com/yankee-svg/medliink",
-      element: <FiGithub className={navItemsClassname} />,
-    },
-
-    {
-      link: "https://youtube.com/yankee-svg/",
-      element: <FiYoutube className={navItemsClassname} />,
+      element: <FiGithub className="h-5 w-5" />,
     },
     {
       link: "https://youtube.com/yankee-svg/",
-      element: <FiTwitter className={navItemsClassname} />,
+      element: <FiYoutube className="h-5 w-5" />,
+    },
+    {
+      link: "https://github.com/Emmysoft_Tm/",
+      element: <FiTwitter className="h-5 w-5" />,
     },
   ];
-  return (
-    <nav className="w-screen flex items-center md:justify-center justify-between md:flex-row flex-col  py-5 overflow-x-hidden z-10" >
-      <h2 className="font-extrabold text-4xl text-secondary  mx-5 md:flex items-center  hidden cursor-pointer ">
-        <Link href="/">Medliink</Link>
-      </h2>
 
-      <section className="hidden md:flex items-end justify-end w-4/6 overflow-x-hidden space-x-6">
+  return (
+    <nav className="w-screen flex items-center md:justify-center justify-between md:flex-row flex-col py-5 overflow-x-hidden z-10">
+      <div className="neu-raised px-6 py-3 rounded-2xl mx-5">
+        <h2 className="neu-text-primary font-extrabold text-2xl md:text-4xl cursor-pointer">
+          <Link href="/" className="flex items-center">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Medliink
+            </span>
+          </Link>
+        </h2>
+      </div>
+
+      <section className="hidden md:flex items-end justify-end w-4/6 overflow-x-hidden space-x-4">
         {navItems.map((navItem, index) => {
           return (
-            <Link href={navItem.link} key={index}>
-              {navItem.element}
+            <Link key={index} href={navItem.link}>
+              <div className={navItemsClassname}>
+                {navItem.element}
+              </div>
             </Link>
           );
         })}
@@ -55,13 +63,15 @@ const Navbar: React.FC = (): JSX.Element => {
 
       <section className="md:hidden flex w-full flex-col">
         <section className="header flex w-full items-center justify-between">
-          <h2 className="font-extrabold text-secondary text-2xl  mx-5">
-            <Link href="/">Medliink</Link>
-          </h2>
+          <div className="neu-raised px-4 py-2 rounded-2xl mx-5">
+            <h2 className="neu-text-primary font-extrabold text-xl">
+              <Link href="/">Medliink</Link>
+            </h2>
+          </div>
 
-          <section
-            className={`hamburger mx-5 transform transition-transform duration-300 ease-in-out  ${
-              navToggled ? "-rotate-90 text-secondary" : "rotate-0"
+          <button
+            className={`neu-pressed transform transition-transform duration-300 ease-in-out rounded-xl p-2 mx-5 ${
+              navToggled ? "rotate-90 neu-raised" : ""
             }`}
             onClick={handleHamburgerClick}
           >
@@ -71,30 +81,32 @@ const Navbar: React.FC = (): JSX.Element => {
               strokeWidth="0"
               viewBox="0 0 24 24"
               className="font-bold"
-              height="35"
-              width="35"
+              height="24"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M4 11h12v2H4zm0-5h16v2H4zm0 12h7.235v-2H4z"></path>
             </svg>
-          </section>
+          </button>
         </section>
 
-        <section
+        <div
           ref={mobileLinksRef}
-          className="mx-5 my-2 overflow-hidden transition-max-h duration-500 ease-in-out"
+          className="mx-5 my-3 overflow-hidden transition-max-h duration-500 ease-in-out neu-card-small"
         >
-          <Link href="/auth/login" className="capitalize block  my-6">
-            login
-          </Link>
-          <Link href="/auth/signup" className="capitalize block  my-6">
-            signup
-          </Link>
-          <Link href="https://github.com/yankee-svg/medliink" className="capitalize flex items-center gap-x-3 my-6">
-             star project
-            <FiGithub className="text-accent"/>
-          </Link>
-        </section>
+          <div className="flex flex-col space-y-4 p-4">
+            <Link href="/auth/login" className="neu-text-secondary font-medium transition-colors duration-200 hover:neu-text-primary">
+              login
+            </Link>
+            <Link href="/auth/signup" className="neu-text-secondary font-medium transition-colors duration-200 hover:neu-text-primary">
+              signup
+            </Link>
+            <Link href="https://github.com/yankee-svg/medliink" className="flex items-center gap-x-3 neu-text-secondary font-medium transition-colors duration-200 hover:neu-text-primary">
+              <FiGithub className="text-primary" />
+              star project
+            </Link>
+          </div>
+        </div>
       </section>
     </nav>
   );

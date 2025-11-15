@@ -9,6 +9,21 @@ const config: Config = {
   daisyui: {
     themes: [
       {
+        neumorphism: {
+          primary: "#6b5b95",
+          secondary: "#8e7dbe",
+          accent: "#b8a9e6",
+          neutral: "#5a4a7a",
+          natural: "#f0f0f3",
+          "base-100": "#f0f0f3",
+          "base-200": "#e6e6ea",
+          "base-300": "#d9d9df",
+          "base-content": "#2c2c2c",
+          info: "#4fc3f7",
+          success: "#4caf50",
+          warning: "#ff9800",
+          error: "#f44336",
+        },
         mytheme: {
           primary: "#9333ea",
           secondary: "#A67EF1",
@@ -24,6 +39,110 @@ const config: Config = {
       },
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    // Custom neumorphism plugin
+    function({ addUtilities }: any) {
+      const newUtilities = {
+        '.neu-raised': {
+          'background': 'var(--bg-raised)',
+          'border-radius': '20px',
+          'box-shadow': '8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light)',
+        },
+        '.neu-pressed': {
+          'background': 'var(--bg-pressed)',
+          'border-radius': '20px',
+          'box-shadow': 'inset 8px 8px 16px var(--shadow-inset-dark), inset -8px -8px 16px var(--shadow-inset-light)',
+        },
+        '.neu-soft': {
+          'background': 'var(--bg-card)',
+          'border-radius': '16px',
+          'box-shadow': '6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light)',
+        },
+        '.neu-inset': {
+          'background': 'var(--bg-primary)',
+          'border-radius': '12px',
+          'box-shadow': 'inset 4px 4px 8px var(--shadow-inset-dark), inset -4px -4px 8px var(--shadow-inset-light)',
+        },
+        '.neu-base': {
+          'background': 'var(--bg-primary)',
+          'border-radius': '20px',
+        },
+        '.neu-card': {
+          'background': 'var(--bg-card)',
+          'border-radius': '20px',
+          'padding': '24px',
+          'box-shadow': '8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light)',
+          'border': '1px solid var(--border-light)',
+        },
+        '.neu-card-small': {
+          'background': 'var(--bg-card)',
+          'border-radius': '16px',
+          'padding': '16px',
+          'box-shadow': '4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light)',
+          'border': '1px solid var(--border-light)',
+        },
+        '.neu-button': {
+          'background': 'var(--bg-raised)',
+          'border': 'none',
+          'border-radius': '16px',
+          'padding': '12px 24px',
+          'cursor': 'pointer',
+          'transition': 'all 0.2s ease',
+          'box-shadow': '6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light)',
+        },
+        '.neu-button:hover': {
+          'transform': 'translateY(-1px)',
+          'box-shadow': '8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light)',
+        },
+        '.neu-button:active': {
+          'transform': 'translateY(0)',
+          'box-shadow': 'inset 4px 4px 8px var(--shadow-inset-dark), inset -4px -4px 8px var(--shadow-inset-light)',
+        },
+        '.neu-input': {
+          'background': 'var(--bg-primary)',
+          'border': 'none',
+          'border-radius': '12px',
+          'padding': '16px',
+          'outline': 'none',
+          'transition': 'all 0.2s ease',
+          'box-shadow': 'inset 4px 4px 8px var(--shadow-inset-dark), inset -4px -4px 8px var(--shadow-inset-light)',
+        },
+        '.neu-input:focus': {
+          'box-shadow': 'inset 6px 6px 12px var(--shadow-inset-dark), inset -6px -6px 12px var(--shadow-inset-light)',
+        },
+        '.neu-text-primary': {
+          'color': 'var(--text-primary)',
+          'font-weight': '600',
+        },
+        '.neu-text-secondary': {
+          'color': 'var(--text-secondary)',
+          'font-weight': '500',
+        },
+        '.neu-text-muted': {
+          'color': 'var(--text-muted)',
+          'font-weight': '400',
+        },
+        '.neu-loading': {
+          'background': 'var(--bg-primary)',
+          'border-radius': '12px',
+          'position': 'relative',
+          'overflow': 'hidden',
+        },
+        '.neu-loading::after': {
+          'content': '""',
+          'position': 'absolute',
+          'top': '0',
+          'left': '-100%',
+          'width': '100%',
+          'height': '100%',
+          'background': 'linear-gradient(90deg, transparent, var(--shadow-light), transparent)',
+          'animation': 'neu-loading-shimmer 1.5s infinite',
+        },
+      }
+      
+      addUtilities(newUtilities, ['responsive', 'hover', 'active', 'focus'])
+    },
+  ],
 };
 export default config;

@@ -10,9 +10,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="mytheme" suppressHydrationWarning>
+    <html lang="en" data-theme="neumorphism" suppressHydrationWarning>
       <Seo />
-      <body className="bg-zinc-50">
+      <body className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
         <Toaster />
         <ReduxProvider>{children}</ReduxProvider>
       </body>
