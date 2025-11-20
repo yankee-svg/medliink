@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { IconType } from "react-icons/lib";
 
 interface DashboardCardProps {
   className?: string;
@@ -18,7 +17,6 @@ const DashboardCard = ({
   healthcareHistoryRef,
   userType,
 }: DashboardCardProps) => {
-  const [currentIcon, setCurrentIcon] = useState<IconType | any>(AiOutlineEye);
   const [toggler, setToggler] = useState(true);
   const [totalAppointment, setTotalAppointment] = useState(appointments);
   const router = useRouter();
@@ -31,7 +29,6 @@ const DashboardCard = ({
     userType === "user" ? "/user/appointments/" : "/hospital/appointments/";
 
   useEffect(() => {
-    setCurrentIcon(toggler ? AiOutlineEye : AiOutlineEyeInvisible);
     setTotalAppointment(toggler ? appointments : "****");
   }, [toggler]);
 
@@ -56,7 +53,11 @@ const DashboardCard = ({
             onClick={handleIconClick}
             className="p-1 rounded-lg neu-pressed transition-all duration-200 hover:neu-raised"
           >
-            {currentIcon}
+            {toggler ? (
+              <AiOutlineEye className="w-4 h-4" />
+            ) : (
+              <AiOutlineEyeInvisible className="w-4 h-4" />
+            )}
           </button>
         </section>
         <button

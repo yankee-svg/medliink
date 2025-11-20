@@ -100,11 +100,11 @@ export default function Settings() {
                   className="profile-container  w-full flex items-center justify-center cursor-pointer"
                   onClick={handleNavigateToProfile}
                 >
-                  <section className="profile-section w-full p-2 my-5 flex items-center md:justify-center gap-x-5 md:gap-x-20">
+                  <section className="profile-section w-full p-2 my-5 flex items-center gap-x-5 md:gap-x-20">
                     <div className="avatar cursor-pointer">
-                      <div className="w-16 rounded-full">
+                      <div className="w-24 rounded-full border-4 border-accent shadow-lg">
                         <img
-                          className=""
+                          className="w-full h-full object-cover"
                           src={`${userDashboardInfo?.profilePicture}`}
                           alt="user profile image"
                         />
@@ -153,9 +153,9 @@ export default function Settings() {
                   </section>
                 </section>
 
-                <section className="action-container w-full flex flex-col items-center md:justify-center">
+                <section className="action-container w-full flex flex-col">
                   <section
-                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2 md:w-6/12"
+                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2"
                     onClick={handleUpdateProfile}
                   >
                     <FaKey className="h-5 w-5" />
@@ -169,7 +169,7 @@ export default function Settings() {
                   </section>
 
                   <section
-                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2 md:w-6/12"
+                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2"
                     onClick={handleNavigateToProfile}
                   >
                     <BiSolidUser className="h-5 w-5" />
@@ -185,7 +185,7 @@ export default function Settings() {
                   </section>
 
                   <section
-                    className="account-verify my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2 md:w-6/12"
+                    className="account-verify my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2"
                     onClick={handleVerificationModalClick}
                   >
                     <MdVerified className="h-5 w-5" />
@@ -198,7 +198,7 @@ export default function Settings() {
                     </section>
                   </section>
 
-                  <section className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2 md:w-6/12">
+                  <section className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2">
                     <BsPeopleFill className="h-5 w-5" />
 
                     <section className="details">
@@ -212,7 +212,7 @@ export default function Settings() {
                   </section>
 
                   <section
-                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2 md:w-6/12"
+                    className="account-details my-5 flex items-center transition-colors duration-100 ease-linear hover:bg-blue-100 rounded cursor-pointer gap-x-10 w-full p-2"
                     onClick={handleLogoutClick}
                   >
                     <FiLogOut className="h-5 w-5" />

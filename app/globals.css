@@ -9,9 +9,33 @@
   font-style: normal;
 }
 
-/* Neumorphism Base Styles */
+/* Neumorphism Base Styles - Multi Theme Support */
 :root {
-  /* Base neumorphism colors - Silver theme */
+  /* Default Light Theme */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #f8f9fa;
+  --bg-pressed: #e9ecef;
+  --bg-raised: #ffffff;
+  
+  /* Shadow colors */
+  --shadow-dark: rgba(0, 0, 0, 0.1);
+  --shadow-light: rgba(255, 255, 255, 0.9);
+  --shadow-inset-dark: rgba(0, 0, 0, 0.06);
+  --shadow-inset-light: rgba(255, 255, 255, 0.8);
+  
+  /* Text colors - Optimized for light theme */
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #6a6a6a;
+  
+  /* Border colors */
+  --border-light: rgba(255, 255, 255, 0.8);
+  --border-dark: rgba(0, 0, 0, 0.08);
+}
+
+/* Silver Theme */
+[data-theme="silver"] {
   --bg-primary: #c0c0c0;
   --bg-secondary: #d4d4d4;
   --bg-card: #c0c0c0;
@@ -20,18 +44,18 @@
   
   /* Shadow colors */
   --shadow-dark: rgba(0, 0, 0, 0.15);
-  --shadow-light: rgba(255, 255, 255, 0.8);
+  --shadow-light: rgba(255, 255, 255, 0.6);
   --shadow-inset-dark: rgba(0, 0, 0, 0.08);
   --shadow-inset-light: rgba(255, 255, 255, 0.5);
   
-  /* Text colors - Adjusted for silver theme */
+  /* Text colors - Optimized for silver theme */
   --text-primary: #1a1a1a;
-  --text-secondary: #4a4a4a;
-  --text-muted: #6a6a6a;
+  --text-secondary: #3a3a3a;
+  --text-muted: #5a5a5a;
   
   /* Border colors */
   --border-light: rgba(255, 255, 255, 0.7);
-  --border-dark: rgba(0, 0, 0, 0.05);
+  --border-dark: rgba(0, 0, 0, 0.1);
 }
 
 /* Dark theme neumorphism colors - Adjusted for silver theme */

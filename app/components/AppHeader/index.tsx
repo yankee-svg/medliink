@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { GoBell } from "react-icons/go";
 import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
+import ThemeSwitcher from "../ThemeSwitcher";
 
 interface AppHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -180,6 +181,9 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
       )}
 
       <section className="user-profile flex items-center gap-x-4">
+        {/* Theme Switcher */}
+        <ThemeSwitcher className="hidden md:block" />
+
         <section
           className="notification cursor-pointer relative"
           ref={notificationRef}
@@ -197,7 +201,7 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
               {notificationItems.map((item) => (
                 <p
                   key={item.id}
-                  className="text-sm p-2 hover:bg-purple-100 rounded capitalize"
+                  className="text-sm p-2 hover:bg-blue-100 rounded capitalize"
                   onClick={() => item.onClick()}
                 >
                   {item.text}
@@ -224,7 +228,7 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
               {profileMenuItems.map((item) => (
                 <p
                   key={item.id}
-                  className="text-[13px] md:text-sm p-3 hover:bg-purple-100 rounded capitalize mt-2 cursor-pointer"
+                  className="text-[13px] md:text-sm p-3 hover:bg-blue-100 rounded capitalize mt-2 cursor-pointer"
                   onClick={() => item.onClick()}
                 >
                   {item.text}
@@ -405,6 +409,9 @@ export const HospitalAppHeader = ({
       )}
 
       <section className="user-profile flex items-center gap-x-4">
+        {/* Theme Switcher */}
+        <ThemeSwitcher className="hidden md:block" />
+
         <section
           className="notification cursor-pointer relative"
           ref={notificationRef}
@@ -422,7 +429,7 @@ export const HospitalAppHeader = ({
               {notificationItems.map((item) => (
                 <p
                   key={item.id}
-                  className="text-sm p-2 hover:bg-purple-100 rounded capitalize"
+                  className="text-sm p-2 hover:bg-blue-100 rounded capitalize"
                   onClick={() => item.onClick()}
                 >
                   {item.text}
@@ -448,7 +455,7 @@ export const HospitalAppHeader = ({
               {profileMenuItems.map((item) => (
                 <p
                   key={item.id}
-                  className="text-[13px] md:text-sm p-3 hover:bg-purple-100 rounded capitalize mt-2 cursor-pointer"
+                  className="text-[13px] md:text-sm p-3 hover:bg-blue-100 rounded capitalize mt-2 cursor-pointer"
                   onClick={() => item.onClick()}
                 >
                   {item.text}

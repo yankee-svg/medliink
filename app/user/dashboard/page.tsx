@@ -260,12 +260,26 @@ const Home = () => {
         description="Medliink Dashboard"
         keywords="dashboard, user dashboard"
       />
-      <div className="w-screen h-screen bg-zinc-50">
+      <div
+        className="w-screen h-screen"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
         {isLoading ? (
           <Loader />
         ) : (
           <SidebarLayout showWelcomeMesage={true}>
-            <section className="general-container w-full mx-auto items-start flex flex-col xl:flex-row gap-x-5">
+            <section
+              className="general-container w-full mx-auto items-start flex flex-col xl:flex-row gap-x-5"
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                borderRadius: '18px',
+                boxShadow:
+                  '0 2px 24px 0 rgba(0,0,0,0.10), 0 1.5px 4px 0 rgba(0,0,0,0.04)',
+                minHeight: '80vh',
+                padding: '2rem 1rem',
+                transition: 'background 0.3s',
+              }}
+            >
               <section className="w-full p-1 flex md:hidden items-center justify-center">
                 <DashboardCard
                   appointments={userDashboardInfo?.appointments?.length!}
@@ -281,7 +295,7 @@ const Home = () => {
 
               <section className="first-section w-full xl:w-8/12 hidden md:flex flex-col items-center justify-center ">
                 <section className="stats-container grid p-1 lg:grid-cols-3 gap-10 w-full">
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
+                  <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <BsCameraVideo className="w-8 h-8" />
                     <Text>
                       {userDashboardInfo?.appointments?.length}{" "}
@@ -291,7 +305,7 @@ const Home = () => {
                     </Text>
                   </section>
 
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
+                  <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <HiOutlineShieldCheck className="w-8 h-8" />
                     <Text>
                       {userDashboardInfo?.allTotalAppointments} total{" "}
@@ -301,7 +315,7 @@ const Home = () => {
                     </Text>
                   </section>
 
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
+                  <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <SlBadge className="w-8 h-8" />
                     <Text>
                       {userDashboardInfo?.reviews?.length} total{" "}

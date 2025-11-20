@@ -77,7 +77,7 @@ export default function Profile() {
                   <div className="avatar cursor-pointer">
                     <div className="w-24 rounded-full">
                       <img
-                        className=""
+                        className="w-full h-full object-cover rounded-full border-2 border-gray-200"
                         src={userDashboardInfo?.profilePicture}
                         alt="user profile image"
                       />
