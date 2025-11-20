@@ -11,12 +11,12 @@
 
 /* Neumorphism Base Styles */
 :root {
-  /* Base neumorphism colors */
-  --bg-primary: #f0f0f3;
-  --bg-secondary: #ffffff;
-  --bg-card: #f0f0f3;
-  --bg-pressed: #d9d9df;
-  --bg-raised: #f7f7fa;
+  /* Base neumorphism colors - Silver theme */
+  --bg-primary: #c0c0c0;
+  --bg-secondary: #d4d4d4;
+  --bg-card: #c0c0c0;
+  --bg-pressed: #a8a8a8;
+  --bg-raised: #d8d8d8;
   
   /* Shadow colors */
   --shadow-dark: rgba(0, 0, 0, 0.15);
@@ -24,32 +24,32 @@
   --shadow-inset-dark: rgba(0, 0, 0, 0.08);
   --shadow-inset-light: rgba(255, 255, 255, 0.5);
   
-  /* Text colors */
-  --text-primary: #2c2c2c;
-  --text-secondary: #5a5a5a;
-  --text-muted: #8a8a8a;
+  /* Text colors - Adjusted for silver theme */
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #6a6a6a;
   
   /* Border colors */
   --border-light: rgba(255, 255, 255, 0.7);
   --border-dark: rgba(0, 0, 0, 0.05);
 }
 
-/* Dark theme neumorphism colors */
+/* Dark theme neumorphism colors - Adjusted for silver theme */
 [data-theme="dark"] {
-  --bg-primary: #1e1e22;
-  --bg-secondary: #2a2a2f;
-  --bg-card: #2a2a2f;
-  --bg-pressed: #232328;
-  --bg-raised: #313138;
+  --bg-primary: #2a2a2a;
+  --bg-secondary: #3a3a3a;
+  --bg-card: #2a2a2a;
+  --bg-pressed: #1a1a1a;
+  --bg-raised: #353535;
   
   --shadow-dark: rgba(0, 0, 0, 0.4);
   --shadow-light: rgba(255, 255, 255, 0.05);
   --shadow-inset-dark: rgba(0, 0, 0, 0.2);
   --shadow-inset-light: rgba(255, 255, 255, 0.02);
   
-  --text-primary: #ffffff;
-  --text-secondary: #b3b3b3;
-  --text-muted: #888888;
+  --text-primary: #f0f0f0;
+  --text-secondary: #c0c0c0;
+  --text-muted: #a0a0a0;
   
   --border-light: rgba(255, 255, 255, 0.1);
   --border-dark: rgba(0, 0, 0, 0.3);

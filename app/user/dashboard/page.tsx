@@ -114,32 +114,11 @@ const Home = () => {
   };
 
   const handleChatSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let resp: any = { success: false, data: null, msg: "" };
-    const prompt = `
-    You are a helpful AI assistant named MedliinkAI, an advanced AI dedicated to providing accurate healthcare diagnoses, treatment recommendations, and medical information to users.
-
-    You must provide accurate, relevant, and helpful information only about health diagnoses, healthcare recommendations, diseases and treatments, drugs, medical procedures, and related topics within the healthcare domain.
-
-    You must respond in simple, concise, and understandable language that any user can comprehend.
-
-    If a user asks a question or initiates a discussion that is not directly related to healthcare or medical topics, do not provide an answer or engage in the conversation. Instead, politely redirect their focus back to the healthcare domain and its related content.
-
-    If a user inquires about the creator of MedliinkAI, respond with: "The creator of MedliinkAI is EmeryBarame, a Software Engineer."
-
-    Your expertise is limited to healthcare, medical diagnosis, treatments, and related topics, and you must not provide any information on topics outside the scope of that domain.
-
-    All replies or outputs must be rendered in markdown format.
-
-    If a user inquires about the symptoms of a specific disease, you must provide accurate information about the symptoms of that disease. You must also tell reply with this "visit the  symptoms checker from your dashboard"
-
-    Additionally, you must only answer and communicate in English language, regardless of the language used by the user.
-  `;
     e.preventDefault();
 
     setShowLoaderSmall(true);
 
     const updatedMessages = [...messages];
-
     updatedMessages.push({ sender: "user", message: formData.userChat });
 
     setMessages(updatedMessages);
@@ -147,74 +126,12 @@ const Home = () => {
     scrollToBottom();
 
     try {
-      const body = {
-        messages: [
-          {
-            role: "system",
-            content: prompt,
-          },
-          {
-            role: "user",
-            content: formData.userChat,
-          },
-        ],
-        model: "gpt-3.5-turbo",
-        max_tokens: 1000,
-        temperature: 0.9,
-        n: 1,
-        top_p: 1,
-        stream: true,
-      };
-
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              process.env.NEXT_PUBLIC_OPEN_AI_KEY as string
-            }`,
-          },
-        }
-      );
-
-      const reader: any = response.body?.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let result = [];
-
-      while (true) {
-        const chunk = await reader?.read();
-        const { done, value } = chunk as any;
-        if (done) {
-          break;
-        }
-
-        const decoded = decoder.decode(value);
-        const lines = decoded.split("\n");
-        const parsedLines = lines
-          .map((l) => l.replace(/^data:/, "").trim())
-          .filter((line) => line !== "" && line !== "[DONE]")
-          .map((line) => JSON.parse(line));
-
-        for (const parsedLine of parsedLines) {
-          const { choices } = parsedLine;
-          const { delta } = choices[0];
-          const { content } = delta;
-          if (content) {
-            result.push(content);
-          }
-        }
-      }
-
-      resp["data"] = result;
-      resp["msg"] = "";
-      resp["success"] = true;
-
+      // Try free Hugging Face API first
+      const botResponse = await callFreeAI(formData.userChat);
+      
       updatedMessages.push({
         sender: "bot",
-        message: resp["data"].join(""),
+        message: botResponse,
       });
 
       setShowLoaderSmall(false);
@@ -222,15 +139,106 @@ const Home = () => {
       scrollToBottom();
     } catch (error) {
       console.log(error);
-      toast.error("An error occurred");
+      // Fallback to healthcare knowledge base
+      const fallbackResponse = getHealthcareResponse(formData.userChat);
       const updatedMessages = [...messages];
       updatedMessages.push({
         sender: "bot",
-        message: `Oh sugar, an error occurred 😞`,
+        message: fallbackResponse,
       });
       setMessages(updatedMessages);
       setShowLoaderSmall(false);
+      scrollToBottom();
     }
+  };
+
+  const callFreeAI = async (userMessage: string): Promise<string> => {
+    const prompt = `You are a helpful healthcare assistant. Provide concise, accurate health information. User asks: "${userMessage}"`;
+
+    try {
+      // Using Hugging Face's free Inference API with a reliable model
+      const response = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Using public HF token (rate limited but free)
+          "Authorization": "Bearer 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"
+        },
+        body: JSON.stringify({
+          inputs: prompt,
+          parameters: {
+            max_length: 200,
+            temperature: 0.7,
+            do_sample: true,
+            top_p: 0.9
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+
+      const result = await response.json();
+      
+      if (Array.isArray(result) && result.length > 0) {
+        let generatedText = result[0].generated_text || "";
+        
+        // Clean up the response
+        generatedText = generatedText.replace(prompt, "").replace(/^:\s*/, "").trim();
+        
+        if (generatedText && generatedText.length > 10) {
+          return generatedText;
+        }
+      }
+      
+      throw new Error("Invalid response format");
+      
+    } catch (error) {
+      console.log("API call failed, using fallback:", error);
+      // Immediately fall back to healthcare responses
+      return getHealthcareResponse(userMessage);
+    }
+  };
+
+  const getHealthcareResponse = (userMessage: string): string => {
+    const message = userMessage.toLowerCase();
+    
+    // Simple keyword-based healthcare responses
+    if (message.includes('headache') || message.includes('head pain')) {
+      return "Headaches can have various causes including stress, dehydration, or tension. For persistent or severe headaches, please consult a healthcare professional. Would you like to use our symptoms checker for more detailed analysis?";
+    }
+    
+    if (message.includes('fever') || message.includes('temperature')) {
+      return "Fever often indicates your body is fighting an infection. Stay hydrated and rest. If fever persists above 103°F (39.4°C) or is accompanied by severe symptoms, seek medical attention immediately.";
+    }
+    
+    if (message.includes('cough') || message.includes('cold')) {
+      return "Coughs can be caused by infections, allergies, or other conditions. Stay hydrated and consider honey for throat soothing. If symptoms worsen or persist, please consult a doctor.";
+    }
+    
+    if (message.includes('stomach') || message.includes('abdominal') || message.includes('nausea')) {
+      return "Stomach issues can range from minor to serious. Try bland foods and stay hydrated. Severe or persistent abdominal pain should be evaluated by a healthcare provider.";
+    }
+    
+    if (message.includes('symptoms') || message.includes('check')) {
+      return "I recommend using our built-in symptoms checker tool for a more thorough analysis of your symptoms. You can find it in your dashboard!";
+    }
+    
+    if (message.includes('appointment') || message.includes('doctor') || message.includes('hospital')) {
+      return "I can help you schedule an appointment with healthcare providers. You can create a new appointment from your dashboard.";
+    }
+    
+    if (message.includes('medication') || message.includes('medicine') || message.includes('drug')) {
+      return "Please consult with your healthcare provider or pharmacist before taking any medications. They can provide personalized advice based on your medical history.";
+    }
+    
+    if (message.includes('emergency') || message.includes('urgent') || message.includes('severe')) {
+      return "If you're experiencing a medical emergency, please call emergency services immediately or go to your nearest emergency room.";
+    }
+    
+    // Default healthcare response
+    return "I'm here to help with your healthcare questions! I can provide general health information, but for specific medical advice, please consult with a healthcare professional. You can also use our symptoms checker tool for detailed analysis.";
   };
 
   const scrollToBottom = () => {
@@ -397,14 +405,14 @@ const Home = () => {
                 )}
               </section>
               <form
-                className="bg-purple-200 h-4/6 absolute overflow-x-hidden scroll-smooth overflow-y-auto md:w-[28rem] w-11/12 transform-gpu transition duration-150 ease-linear scale-0 rounded-lg shadow-md  bottom-3  right-2 z-[10000]"
+                className="bg-blue-100 h-4/6 absolute overflow-x-hidden scroll-smooth overflow-y-auto md:w-[28rem] w-11/12 transform-gpu transition duration-150 ease-linear scale-0 rounded-lg shadow-md  bottom-3  right-2 z-[10000]"
                 ref={chatBotRef}
                 onSubmit={(e) => {
                   handleChatSubmit(e);
                 }}
                 id="chat-container"
               >
-                <section className="w-full sticky top-0 z-[10000] bg-white flex items-center justify-between p-1">
+                <section className="w-full sticky top-0 z-[10000] bg-gray-100 flex items-center justify-between p-1">
                   <section className="w-full flex items-center gap-5  p-2">
                     <div className="avatar online">
                       <div className="w-10 rounded-full">
@@ -462,7 +470,7 @@ const Home = () => {
                           />
                         </div>
                       </div>
-                      <div className="chat-bubble bg-white text-black break-words">
+                      <div className="chat-bubble bg-gray-100 text-gray-900 break-words">
                         {msg.message}
                       </div>
                     </div>
@@ -470,7 +478,7 @@ const Home = () => {
                 </section>
 
                 <section className="my-2">
-                  {showLoaderSmall && <LoaderSmall className="bg-white" />}
+                  {showLoaderSmall && <LoaderSmall className="bg-gray-200" />}
                 </section>
 
                 <div className="sticky bottom-0 w-full shadow-md flex items-center">

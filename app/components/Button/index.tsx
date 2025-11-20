@@ -18,33 +18,28 @@ const Button = ({
   size = "md",
   ...others 
 }: ButtonProps) => {
-  const baseClasses = "neu-button capitalize font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed";
-  
-  const variantClasses = {
-    primary: "text-white",
-    secondary: "neu-text-primary",
-    accent: "text-white",
-    ghost: "bg-transparent shadow-none hover:bg-base-200"
-  };
-  
-  const sizeClasses = {
-    sm: "px-3 py-2 text-sm rounded-xl",
-    md: "px-6 py-3 text-base rounded-2xl",
-    lg: "px-8 py-4 text-lg rounded-2xl"
-  };
-  
-  const backgroundClasses = {
-    primary: "bg-primary",
-    secondary: "bg-base-200",
-    accent: "bg-accent",
-    ghost: ""
+  const getButtonStyles = () => {
+    if (variant === "primary") {
+      return `bg-[#3B82F6] text-white font-medium px-6 py-3 rounded-2xl transition-all duration-200 hover:bg-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${className || ''}`;
+    }
+    
+    if (variant === "secondary") {
+      return `bg-base-200 neu-text-primary font-medium px-6 py-3 rounded-2xl transition-all duration-200 hover:bg-base-200/80 focus:outline-none focus:ring-2 focus:ring-base-200 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed neu-raised ${className || ''}`;
+    }
+    
+    if (variant === "accent") {
+      return `bg-[#93C5FD] text-white font-medium px-6 py-3 rounded-2xl transition-all duration-200 hover:bg-[#60A5FA] focus:outline-none focus:ring-2 focus:ring-[#93C5FD] focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg ${className || ''}`;
+    }
+    
+    // ghost variant
+    return `bg-transparent text-[#3B82F6] font-medium px-6 py-3 rounded-2xl transition-all duration-200 hover:bg-base-200 focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed ${className || ''}`;
   };
 
   return (
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${backgroundClasses[variant]} ${className}`}
+      className={getButtonStyles()}
       {...others}
     >
       {children}
