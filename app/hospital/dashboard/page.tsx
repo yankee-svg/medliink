@@ -22,6 +22,7 @@ import { SlBadge } from "react-icons/sl";
 import { useDispatch } from "react-redux";
 import DashboardCard from "@/app/components/DashboardCard/DashboardCard";
 import { HospitalDashboardQuickActions } from "@/app/components/DashboardQuickActions/DashboardQuickActions";
+import { HealthcareHistoryDashboard } from "@/app/components/HealthCareHistory";
 import Seo from "@/app/components/Seo/Seo";
 
 const Home = () => {
@@ -120,17 +121,13 @@ const Home = () => {
                 </section>
 
                 <section className="health-care-history w-full my-5 p-2">
-                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    healthcare history
-                  </h3>
-
-                  {userDashboardInfo?.healthCareHistory?.length === 0 ? (
-                    <Text className="text-center my-5">
-                      No healthcare history
-                    </Text>
-                  ) : (
-                    <Text>History dey</Text>
-                  )}
+                  <HealthcareHistoryDashboard 
+                    userType="hospital"
+                    totalPatients={userDashboardInfo?.allTotalAppointments || 0}
+                    todayAppointments={userDashboardInfo?.appointments?.length || 0}
+                    successRate={94.2}
+                    avgWaitTime={12}
+                  />
                 </section>
               </section>
 
@@ -177,17 +174,13 @@ const Home = () => {
               </section>
 
               <section className="health-care-history w-full md:hidden my-5 p-1">
-                <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                  healthcare history
-                </h3>
-
-                {userDashboardInfo?.healthCareHistory?.length === 0 ? (
-                  <Text className="text-center my-5 text-sm">
-                    No healthcare history
-                  </Text>
-                ) : (
-                  <Text>History dey</Text>
-                )}
+                <HealthcareHistoryDashboard 
+                  userType="hospital"
+                  totalPatients={userDashboardInfo?.allTotalAppointments || 0}
+                  todayAppointments={userDashboardInfo?.appointments?.length || 0}
+                  successRate={94.2}
+                  avgWaitTime={12}
+                />
               </section>
             </section>
           </HospitalSidebarNav>

@@ -52,8 +52,8 @@ const ActiveHospitals = ({ className }: ActiveHospitalsProps) => {
                 href={`/user/messages/${userDashboardInfo?._id}_${hospital?._id}?hospitalId=${hospital?._id}`}
               >
                 <div className="avatar cursor-pointer online">
-                  <div className="w-14 rounded-full">
-                    <img src={hospital?.profilePicture} />
+                  <div className="w-14 rounded-full bg-white flex items-center justify-center border-2 border-blue-200 p-2">
+                    <img src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png" className="w-full h-full object-contain" alt="Hospital" />
                   </div>
                 </div>
               </Link>

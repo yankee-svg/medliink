@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { BiSolidUser } from "react-icons/bi";
 import { BsPenFill, BsPeopleFill } from "react-icons/bs";
 import { FaKey } from "react-icons/fa";
+import { HiOfficeBuilding } from "react-icons/hi";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { MdVerified } from "react-icons/md";
@@ -102,12 +103,8 @@ export default function Settings() {
                 >
                   <section className="profile-section w-full p-2 my-5 flex items-center gap-x-5 md:gap-x-20">
                     <div className="avatar cursor-pointer">
-                      <div className="w-24 rounded-full border-4 border-accent shadow-lg">
-                        <img
-                          className="w-full h-full object-cover"
-                          src={`${userDashboardInfo?.profilePicture}`}
-                          alt="user profile image"
-                        />
+                      <div className="w-24 h-24 rounded-full border-4 border-accent shadow-lg bg-white flex items-center justify-center p-4">
+                        <img src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png" alt="Hospital" className="w-full h-full object-contain" />
                       </div>
                       <section className="pen-container bg-accent flex items-center justify-center rounded-full w-6 h-6 transform-gpu text-white translate-y-12 -translate-x-7 hover:scale-110 duration-100 ease-linear hover:bg-secondary hover:text-slate-200">
                         <Link href={"/hospital/profile"}>

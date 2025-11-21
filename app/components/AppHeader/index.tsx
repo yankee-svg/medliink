@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { GoBell } from "react-icons/go";
 import { IoIosArrowBack } from "react-icons/io";
+import { HiOfficeBuilding } from "react-icons/hi";
 import { useDispatch } from "react-redux";
 import ThemeSwitcher from "../ThemeSwitcher";
 
@@ -215,7 +216,7 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
           <div className="w-10 rounded-full" onClick={toggleProfileDropdown}>
             <img
               className=""
-              src={userInfo?.profilePicture}
+              src={userInfo?.profilePicture || `https://api.dicebear.com/7.x/micah/svg?seed=${userInfo?.username || 'user'}`}
               alt="user profile image"
             />
           </div>
@@ -439,12 +440,8 @@ export const HospitalAppHeader = ({
           )}
         </section>
         <div className="avatar cursor-pointer relative" ref={profileRef}>
-          <div className="w-10 rounded-full" onClick={toggleProfileDropdown}>
-            <img
-              className=""
-              src={userInfo?.profilePicture}
-              alt="hospital profile image"
-            />
+          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg border-2 border-blue-200" onClick={toggleProfileDropdown}>
+            <img src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png" alt="Hospital" className="w-8 h-8 object-contain" />
           </div>
 
           {isProfileDropdownVisible && (

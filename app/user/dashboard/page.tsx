@@ -294,6 +294,51 @@ const Home = () => {
               </section>
 
               <section className="first-section w-full xl:w-8/12 hidden md:flex flex-col items-center justify-center ">
+                {/* Health Announcements Banner */}
+                <section className="w-full mb-8 relative overflow-hidden rounded-3xl shadow-2xl group">
+                  <div className="relative h-64 bg-gradient-to-r from-orange-400 via-red-400 to-pink-400">
+                    {/* Background Image with Overlay */}
+                    <div 
+                      className="absolute inset-0 opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                      style={{
+                        backgroundImage: 'url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/80 via-pink-500/70 to-orange-500/60" />
+                    
+                    {/* Content */}
+                    <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-12">
+                      <div className="inline-block mb-4">
+                        <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2 rounded-full border border-white/30">
+                          ALWAYS OPEN
+                        </span>
+                      </div>
+                      <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 drop-shadow-lg">
+                        24/7 Emergency Care Available
+                      </h2>
+                      <p className="text-white/90 text-lg mb-6 max-w-xl drop-shadow">
+                        Round-the-clock medical assistance for urgent cases
+                      </p>
+                      <div>
+                        <button className="bg-white text-gray-900 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                          Learn More
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Navigation Dots */}
+                    <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                      <div className="w-2 h-2 rounded-full bg-white/50"></div>
+                      <div className="w-2 h-2 rounded-full bg-white/50"></div>
+                      <div className="w-8 h-2 rounded-full bg-white"></div>
+                    </div>
+                  </div>
+                </section>
+
                 <section className="stats-container grid p-1 lg:grid-cols-3 gap-10 w-full">
                   <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <BsCameraVideo className="w-8 h-8" />

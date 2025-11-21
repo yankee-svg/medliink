@@ -35,12 +35,24 @@ export default function Home() {
               </section>
             </div>
 
-            <div className="lg:w-1/2  flex items-center  justify-center">
-              <img
-                src="/doctor.png"
-                alt="doctors in lab coat"
-                className="transform scale-110"
-              />
+            <div className="lg:w-1/2 flex items-center justify-center relative min-h-[500px]">
+              <div className="relative w-full h-full">
+                {/* Decorative background blur circles */}
+                <div className="absolute -top-10 -right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+                <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
+                
+                {/* Main image with styling */}
+                <div className="relative z-20 w-full h-full">
+                  <img
+                    src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    alt="Medical professional in operating room"
+                    className="w-full h-full object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-500 border-4 border-white/50"
+                  />
+                  {/* Gradient overlay on image for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-cyan-500/10 rounded-3xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/30 rounded-3xl"></div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

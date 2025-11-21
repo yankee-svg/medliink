@@ -76,10 +76,10 @@ const Login = () => {
         description="Login to your Medliink account"
         keywords="login, log in"
       />
-      <section className="w-screen h-screen flex items-center justify-center">
+      <section className={`w-screen h-screen flex ${formData.userType === "hospital" ? "items-start justify-start pt-20" : "items-center justify-center"}`}>
         {isLoading && <Loader />}
         <form
-          className="w-11/12 md:w-1/2 xl:w-1/4"
+          className={`${formData.userType === "hospital" ? "w-11/12 md:w-1/2 xl:w-1/3 ml-8" : "w-11/12 md:w-1/2 xl:w-1/4"}`}
           onSubmit={(e) => {
             handleLogin(e);
           }}

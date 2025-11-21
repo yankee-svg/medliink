@@ -161,10 +161,11 @@ const MessagesContent = () => {
               <section className="user-details flex items-center w-full justify-between p-1">
                 <section className="first-section flex items-center gap-x-5">
                   <div className="avatar online">
-                    <div className="w-12 rounded-full">
+                    <div className="w-24 rounded-full bg-white flex items-center justify-center border-2 border-blue-200 p-4">
                       <img
-                        src={fetchedHospitalData?.profilePicture}
-                        alt="hospital profile image"
+                        src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png"
+                        className="w-full h-full object-contain"
+                        alt="hospital"
                       />
                     </div>
                   </div>

@@ -2,6 +2,7 @@ import { useGetHospitalRatingQuery } from "@/app/store/slices/user.slice";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
+import { HiExternalLink } from "react-icons/hi";
 import Text from "../Text";
 import Verified from "../Verified";
 
@@ -12,6 +13,7 @@ interface HospitalCardProps {
   isVerified: boolean;
   _id: string;
   href: string;
+  website?: string;
 }
 
 interface UserCardProps {
@@ -31,6 +33,7 @@ const HospitalCard = ({
   isVerified,
   _id,
   href,
+  website,
 }: HospitalCardProps) => {
   const stars = Array(5).fill(null);
   const [rating, setRating] = useState(0);
@@ -54,10 +57,27 @@ const HospitalCard = ({
     </React.Fragment>
   ));
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // If website exists, redirect to website instead of profile page
+    if (website) {
+      e.preventDefault();
+      const url = website.startsWith('http') ? website : `https://${website}`;
+      window.open(url, '_blank');
+    }
+  };
+
   return (
-    <Link href={href}>
-      <div className={`neu-card-small transition-all duration-300 hover:shadow-lg hover:transform hover:-translate-y-1 cursor-pointer group ${className}`}>
-        <div className="flex items-start justify-between mb-3">
+    <Link href={href} onClick={handleCardClick}>
+      <div className={`neu-card-small transition-all duration-300 hover:shadow-lg hover:transform hover:-translate-y-1 cursor-pointer group ${className} relative`}>
+        {website && (
+          <div className="absolute top-3 right-3">
+            <div className="p-1.5 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-200">
+              <HiExternalLink className="w-3.5 h-3.5 text-blue-600" />
+            </div>
+          </div>
+        )}
+        
+        <div className="flex items-start justify-between mb-3 pr-8">
           <h2 className="neu-text-primary font-bold text-lg group-hover:text-primary transition-colors duration-200">
             {clinicName}
           </h2>

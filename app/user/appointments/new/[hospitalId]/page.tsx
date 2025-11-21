@@ -69,10 +69,10 @@ const ViewHospitalProfile = ({
               <section className="hospital-profile w-full my-5">
                 <section className="profile-header w-full flex flex-col items-center">
                   <div className="avatar cursor-pointer">
-                    <div className="w-24 rounded-full">
+                    <div className="w-24 rounded-full bg-white flex items-center justify-center border-2 border-blue-200 p-4">
                       <img
-                        className=""
-                        src={hospitalSearchProfileInfo?.profilePicture}
+                        className="w-full h-full object-contain"
+                        src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png"
                         alt="hospital profile image"
                       />
                     </div>

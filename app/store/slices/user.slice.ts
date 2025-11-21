@@ -46,6 +46,7 @@ export interface userDashboardInfoProps {
   updatedAt: Date;
   createdAt: Date;
   location?: string;
+  website?: string;
   online?: boolean;
 
   //looks weird adding this here, well an hospital is also a type of user soo yeah YGTV
@@ -97,6 +98,7 @@ export interface hospitalProps {
   allTotalAppointments: number;
   bio: string;
   location?: string;
+  website?: string;
   online?: boolean;
   updatedAt: Date;
   createdAt: Date;
@@ -472,6 +474,15 @@ export const userApiCall = apiSlice.injectEndpoints({
       invalidatesTags: ["User", "Hospital"],
     }),
 
+    updateHospitalWebsite: builder.mutation({
+      query: (data) => ({
+        url: `${HOSPITALS_URL}/${data.id}`,
+        method: "PUT",
+        data: { website: data.website },
+      }),
+      invalidatesTags: ["User", "Hospital"],
+    }),
+
     getAllUsers: builder.query({
       query: (data) => ({
         url: USERS_URL,
@@ -781,6 +792,7 @@ export const {
 
   useUpdateUserMutation,
   useUpdateHospitalMutation,
+  useUpdateHospitalWebsiteMutation,
   useGetAllUsersQuery,
   useGetAllHospitalsQuery,
   useGetUserByIdQuery,
