@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiGithub, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const Navbar: React.FC = (): JSX.Element => {
-  const mobileLinksRef = useRef<HTMLElement>(null);
+  const mobileLinksRef = useRef<HTMLDivElement>(null);
   const [navToggled, setNavToggled] = useState<boolean>(false);
 
   useEffect(() => {

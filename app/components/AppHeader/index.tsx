@@ -143,14 +143,16 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
       onClick: async () => {
         try {
           const response = await logout({}).unwrap();
-          if (response) {
-            toast.success(response.message);
-            dispatch(logoutUser());
-            dispatch(resetUser());
-            router.push("/auth/login");
-          }
+          toast.success(response?.message || "Logged out successfully");
+          dispatch(logoutUser());
+          dispatch(resetUser());
+          // Use window.location for hard redirect to ensure middleware processes correctly
+          window.location.href = "/auth/login";
         } catch (error: any) {
-          toast.error(error?.data?.message || error.error || error?.data);
+          // Even if API fails, still logout locally
+          dispatch(logoutUser());
+          dispatch(resetUser());
+          window.location.href = "/auth/login";
         }
       },
     },
@@ -372,13 +374,16 @@ export const HospitalAppHeader = ({
       onClick: async () => {
         try {
           const response = await logout({}).unwrap();
-          if (response) {
-            toast.success(response.message);
-            dispatch(logoutUser());
-            router.push("/auth/login");
-          }
+          toast.success(response?.message || "Logged out successfully");
+          dispatch(logoutUser());
+          dispatch(resetUser());
+          // Use window.location for hard redirect to ensure middleware processes correctly
+          window.location.href = "/auth/login";
         } catch (error: any) {
-          toast.error(error?.data?.message || error.error || error?.data);
+          // Even if API fails, still logout locally
+          dispatch(logoutUser());
+          dispatch(resetUser());
+          window.location.href = "/auth/login";
         }
       },
     },

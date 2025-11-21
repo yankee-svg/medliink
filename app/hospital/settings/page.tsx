@@ -36,13 +36,18 @@ export default function Settings() {
   const verificationRef = useRef<HTMLDialogElement | any>(null);
 
   const handleLogoutClick = async () => {
-    const response: any = await logout({});
-
-    if (response) {
-      toast.success(response.data.message);
-      router.push("/auth/login");
+    try {
+      const response: any = await logout({});
+      toast.success(response?.data?.message || "Logged out successfully");
       dispatch(resetUser());
       dispatch(logoutUser());
+      // Use window.location for hard redirect
+      window.location.href = "/auth/login";
+    } catch (error) {
+      // Even if API fails, still logout locally
+      dispatch(resetUser());
+      dispatch(logoutUser());
+      window.location.href = "/auth/login";
     }
   };
 
