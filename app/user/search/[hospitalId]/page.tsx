@@ -48,7 +48,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
             : "Hospital"
         }'s Profile`}
       />
-      <div className="w-screen min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+      <div className="w-screen min-h-screen bg-gray-50">
         {isLoading ? (
           <Loader />
         ) : isError ? (
@@ -66,7 +66,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
               <section className="relative w-full h-80 mb-8 rounded-2xl overflow-hidden shadow-2xl">
                 <div className="absolute inset-0">
                   <img
-                    src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&h=800&fit=crop"
                     alt="Hospital Building"
                     className="w-full h-full object-cover"
                   />
@@ -131,39 +131,39 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                 <div className="lg:col-span-2 space-y-6">
                   
                   {/* About Section */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 className="font-bold text-xl mb-4 text-gray-800 dark:text-white">About</h3>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 className="font-bold text-xl mb-4 text-gray-800">About</h3>
+                    <p className="text-gray-700 leading-relaxed">
                       {hospitalSearchProfileInfo?.bio || "The University Teaching Hospital of Kigali is a 519 bed-teaching hospital located in Kigali City, Rwanda. Founded in 1918 by Belgian colonialists, CHUK is the first and the biggest healthcare institution in Rwanda. CHUK has played a role in rebuilding Rwanda's healthcare after the genocide against Tutsi of 1994."}
                     </p>
                   </div>
 
                   {/* Photo Gallery */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 className="font-bold text-xl mb-4 text-gray-800 dark:text-white">Photos</h3>
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 className="font-bold text-xl mb-4 text-gray-800">Photos</h3>
                     <div className="grid grid-cols-3 gap-4">
                       <img
-                        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=400"
+                        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop"
                         alt="Hospital exterior"
                         className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                       />
                       <img
-                        src="https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=400"
-                        alt="Hospital interior"
+                        src="https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=400&h=300&fit=crop"
+                        alt="Hospital buildings"
                         className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                       />
                       <img
-                        src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?q=80&w=400"
-                        alt="Medical equipment"
+                        src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&h=300&fit=crop"
+                        alt="Medical facility"
                         className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                       />
                     </div>
                   </div>
 
                   {/* Reviews Section */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-bold text-xl text-gray-800 dark:text-white">Reviews</h3>
+                      <h3 className="font-bold text-xl text-gray-800">Reviews</h3>
                       <Link
                         href={`/user/search/${hospitalId}/review?hId=${hospitalSearchProfileInfo?._id}`}
                       >
@@ -173,7 +173,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                       </Link>
                     </div>
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="text-5xl font-bold text-gray-800 dark:text-white">4.2</div>
+                      <div className="text-5xl font-bold text-gray-800">4.2</div>
                       <div>
                         <div className="flex items-center gap-1 mb-1">
                           {[1, 2, 3, 4].map((star) => (
@@ -181,18 +181,18 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                           ))}
                           <HiStar className="h-5 w-5 text-gray-300" />
                         </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-gray-600">
                           {hospitalSearchProfileInfo?.reviews?.length || 39} reviews
                         </p>
                       </div>
                     </div>
                     
                     {hospitalSearchProfileInfo?.reviews?.length === 0 ? (
-                      <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+                      <p className="text-gray-500 text-center py-4">
                         No reviews yet. Be the first to review!
                       </p>
                     ) : (
-                      <div className="text-gray-600 dark:text-gray-400 text-sm">
+                      <div className="text-gray-600 text-sm">
                         Reviews coming soon...
                       </div>
                     )}
@@ -203,14 +203,14 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                 <div className="lg:col-span-1 space-y-6">
                   
                   {/* Contact Information */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 className="font-bold text-lg mb-4 text-gray-800 dark:text-white">Contact Information</h3>
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 className="font-bold text-lg mb-4 text-gray-800">Contact Information</h3>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
                         <HiLocationMarker className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Address</p>
-                          <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                          <p className="text-xs text-gray-500">Address</p>
+                          <p className="text-sm font-medium text-gray-800">
                             KN 4 Ave, Kigali
                           </p>
                         </div>
@@ -218,7 +218,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                       <div className="flex items-start gap-3">
                         <HiPhone className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Phone</p>
+                          <p className="text-xs text-gray-500">Phone</p>
                           <a href="tel:0788304005" className="text-sm font-medium text-blue-600 hover:underline">
                             0788 304 005
                           </a>
@@ -227,7 +227,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                       <div className="flex items-start gap-3">
                         <HiMail className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
                         <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Email</p>
+                          <p className="text-xs text-gray-500">Email</p>
                           <a href={`mailto:${hospitalSearchProfileInfo?.email}`} className="text-sm font-medium text-blue-600 hover:underline break-all">
                             {hospitalSearchProfileInfo?.email}
                           </a>
@@ -237,7 +237,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                         <div className="flex items-start gap-3">
                           <HiGlobe className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">Website</p>
+                            <p className="text-xs text-gray-500">Website</p>
                             <a 
                               href={hospitalSearchProfileInfo.website.startsWith('http') ? hospitalSearchProfileInfo.website : `https://${hospitalSearchProfileInfo.website}`}
                               target="_blank"
@@ -254,24 +254,24 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                   </div>
 
                   {/* Hospital Stats */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 className="font-bold text-lg mb-4 text-gray-800 dark:text-white">Hospital Stats</h3>
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 className="font-bold text-lg mb-4 text-gray-800">Hospital Stats</h3>
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <div className="text-center p-4 bg-blue-50 rounded-lg">
                         <p className="text-2xl font-bold text-blue-600">519</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Beds</p>
+                        <p className="text-xs text-gray-600 mt-1">Beds</p>
                       </div>
-                      <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <div className="text-center p-4 bg-green-50 rounded-lg">
                         <p className="text-2xl font-bold text-green-600">24/7</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Service</p>
+                        <p className="text-xs text-gray-600 mt-1">Service</p>
                       </div>
-                      <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <div className="text-center p-4 bg-purple-50 rounded-lg">
                         <p className="text-2xl font-bold text-purple-600">{hospitalSearchProfileInfo?.allTotalAppointments || 0}</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Checkups</p>
+                        <p className="text-xs text-gray-600 mt-1">Checkups</p>
                       </div>
-                      <div className="text-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                      <div className="text-center p-4 bg-orange-50 rounded-lg">
                         <p className="text-2xl font-bold text-orange-600">4.2</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Rating</p>
+                        <p className="text-xs text-gray-600 mt-1">Rating</p>
                       </div>
                     </div>
                   </div>

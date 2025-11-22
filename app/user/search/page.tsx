@@ -164,20 +164,6 @@ const SearchHospitals = () => {
                   View all hospitals registered on Medliink platform
                 </Text>
               </div>
-
-              <div className="neu-soft p-4 md:p-6 rounded-xl md:rounded-2xl hover:shadow-lg transition-all duration-300 sm:col-span-2 lg:col-span-1">
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 md:w-6 md:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="font-semibold text-sm md:text-base text-gray-800">Book Instantly</h4>
-                </div>
-                <Text className="text-xs md:text-sm text-gray-600">
-                  Schedule appointments with your preferred hospitals in just a few clicks
-                </Text>
-              </div>
             </section>
 
             {/* Map View for Nearby Hospitals */}
@@ -206,8 +192,8 @@ const SearchHospitals = () => {
               )
             )}
 
-            <section className="search-hospitals">
-              <form className="flex items-center justify-center mb-4 md:mb-8 px-3 md:px-0">
+            <section className="search-hospitals px-3 md:px-0">
+              <form className="flex items-center justify-center mb-4 md:mb-8">
                 <input
                   type="text"
                   placeholder="Search hospitals"

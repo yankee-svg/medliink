@@ -11,6 +11,7 @@ import { BiMessageRoundedDots } from "react-icons/bi";
 import { BsCameraVideo } from "react-icons/bs";
 import { FiLogOut, FiSearch } from "react-icons/fi";
 import { IoAnalytics, IoSettingsOutline } from "react-icons/io5";
+import { FaHospital } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import AppHeader, { HospitalAppHeader } from "../AppHeader";
 import MobileNav, { HospitalMobileNav } from "../MobileNav";
@@ -94,7 +95,7 @@ const SidebarLayout = ({
                 : "bg-gray-200"
             } hover:bg-accent duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
           >
-            <FiSearch className="w-6 h-6" />
+            <FaHospital className="w-6 h-6" />
             <Text>Find Hospitals</Text>
           </Link>
 

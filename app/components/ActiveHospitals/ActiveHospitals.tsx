@@ -49,6 +49,7 @@ const ActiveHospitals = ({ className }: ActiveHospitalsProps) => {
           onlineHospitals?.map!((hospital) => {
             return (
               <Link
+                key={hospital?._id}
                 href={`/user/messages/${userDashboardInfo?._id}_${hospital?._id}?hospitalId=${hospital?._id}`}
               >
                 <div className="avatar cursor-pointer online">

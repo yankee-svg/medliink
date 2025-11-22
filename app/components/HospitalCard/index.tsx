@@ -93,7 +93,7 @@ const HospitalCard = ({
             {starElements}
           </div>
           <span className="neu-text-muted text-xs">
-            {rating.toFixed(1)}
+            {(rating || 0).toFixed(1)}
           </span>
         </div>
       </div>

@@ -294,7 +294,7 @@ const Home = () => {
               </section>
 
               <section className="first-section w-full xl:w-8/12 hidden md:flex flex-col items-center justify-center ">
-                {/* Health Announcements Banner */}
+                {/* Health Connection Banner */}
                 <section className="w-full mb-8 relative overflow-hidden rounded-3xl shadow-2xl group">
                   <div className="relative h-64 bg-gradient-to-r from-orange-400 via-red-400 to-pink-400">
                     {/* Background Image with Overlay */}
@@ -314,18 +314,20 @@ const Home = () => {
                     <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-12">
                       <div className="inline-block mb-4">
                         <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2 rounded-full border border-white/30">
-                          ALWAYS OPEN
+                          CONNECT INSTANTLY
                         </span>
                       </div>
                       <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 drop-shadow-lg">
-                        24/7 Emergency Care Available
+                        Access Healthcare Providers Anytime
                       </h2>
                       <p className="text-white/90 text-lg mb-6 max-w-xl drop-shadow">
-                        Round-the-clock medical assistance for urgent cases
+                        Connect with multiple hospitals and clinics in one platform
                       </p>
                       <div>
-                        <button className="bg-white text-gray-900 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                          Learn More
+                        <button 
+                          onClick={() => router.push('/user/search')}
+                          className="bg-white text-gray-900 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                          Find Providers
                         </button>
                       </div>
                     </div>
@@ -345,63 +347,56 @@ const Home = () => {
                     <Text>
                       {userDashboardInfo?.appointments?.length}{" "}
                       {userDashboardInfo?.appointments?.length! > 1
-                        ? "Appointments"
-                        : "Appointment"}
+                        ? "Active Bookings"
+                        : "Active Booking"}
                     </Text>
                   </section>
 
                   <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <HiOutlineShieldCheck className="w-8 h-8" />
                     <Text>
-                      {userDashboardInfo?.allTotalAppointments} total{" "}
+                      {userDashboardInfo?.allTotalAppointments} Total{" "}
                       {userDashboardInfo?.allTotalAppointments! > 1
-                        ? "Checkups"
-                        : "Checkup"}
+                        ? "Consultations"
+                        : "Consultation"}
                     </Text>
                   </section>
 
                   <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <SlBadge className="w-8 h-8" />
                     <Text>
-                      {userDashboardInfo?.reviews?.length} total{" "}
+                      {userDashboardInfo?.reviews?.length} Provider{" "}
                       {userDashboardInfo?.reviews?.length! > 1
                         ? "Reviews"
                         : "Review"}
                     </Text>
                   </section>
                 </section>
-
-                <section
-                  className="health-care-history w-full my-5 p-2"
-                  ref={healthCareHistoryRef}
-                >
-                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    healthcare history
-                  </h3>
-
-                  {userDashboardInfo?.healthCareHistory?.length === 0 ? (
-                    <Text className="text-center my-5">
-                      No healthcare history
-                    </Text>
-                  ) : (
-                    <Text>History dey</Text>
-                  )}
-                </section>
               </section>
 
               <section className="second-section w-full xl:w-4/12 mt-16 md:mt-0 grid grid-cols-1 items-center justify-center p-2">
                 <section className="user-appointments">
                   <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    recent appointments
+                    Recent Bookings
                   </h3>
 
                   <section className="appointments mt-4">
                     {latestAppointmentLoading ? (
                       <LoaderSmall className="my-2" />
                     ) : recentAppointmentInfo?.length == 0 ? (
-                      <Text className="text-center my-3">
-                        No recent appointments
-                      </Text>
+                      <div className="my-5 p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-blue-50 border border-gray-200">
+                        <div className="flex flex-col items-center justify-center text-center">
+                          <svg className="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <Text className="text-gray-600 mb-3">
+                            No bookings yet
+                          </Text>
+                          <Text className="text-sm text-gray-500 mb-4">
+                            Connect with healthcare providers
+                          </Text>
+                        </div>
+                      </div>
                     ) : (
                       recentAppointmentInfo?.map(
                         (appointment: userAppointmentInfoProps) => {
@@ -424,45 +419,212 @@ const Home = () => {
                         className="bg-accent"
                         onClick={handleNewAppointmentClick}
                       >
-                        New appointment
+                        Book Appointment
                       </Button>
                     </section>
                   </section>
                 </section>
                 <br />
                 <br />
-                <section className="symptoms-checker">
+                <section className="connected-providers">
                   <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    symptoms checker
+                    Connected Providers
                   </h3>
 
-                  <Text noCapitalize className="my-4">
-                    Symptoms checker to help you identify potential health
-                    conditions based on your symptoms.
-                  </Text>
+                  <div className="my-4 p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-indigo-200 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-800">Healthcare Network</h4>
+                        <p className="text-sm text-gray-600">Access multiple providers instantly</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="bg-white/60 backdrop-blur-sm p-3 rounded-lg">
+                        <p className="text-2xl font-bold text-indigo-600">12+</p>
+                        <p className="text-xs text-gray-600">Hospitals</p>
+                      </div>
+                      <div className="bg-white/60 backdrop-blur-sm p-3 rounded-lg">
+                        <p className="text-2xl font-bold text-purple-600">50+</p>
+                        <p className="text-xs text-gray-600">Clinics</p>
+                      </div>
+                    </div>
+                    <Button
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white w-full"
+                      onClick={() => router.push('/user/search')}
+                    >
+                      Explore All Providers
+                    </Button>
+                  </div>
+                </section>
+                <br />
+                <br />
+                <section className="health-tips">
+                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
+                    Health Tips
+                  </h3>
+
+                  <div className="my-4 space-y-3">
+                    <div className="neu-soft p-4 rounded-xl hover:shadow-lg transition-shadow cursor-pointer">
+                      <div className="flex gap-3">
+                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">Regular Checkups</h4>
+                          <p className="text-xs text-gray-600">Schedule routine health screenings to catch issues early</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="neu-soft p-4 rounded-xl hover:shadow-lg transition-shadow cursor-pointer">
+                      <div className="flex gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">Stay Connected</h4>
+                          <p className="text-xs text-gray-600">Keep in touch with your healthcare providers via messages</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <Button
-                    className="bg-accent"
+                    className="bg-accent w-full"
                     onClick={handleSymptomsCheckerClick}
                   >
-                    Symptoms checker
+                    Check Symptoms Now
                   </Button>
+                </section>
+                <br />
+                <br />
+                <section className="quick-actions-sidebar">
+                  <h3 className="font-bold capitalize text-[18px] md:text-[20px] mb-4">
+                    Quick Actions
+                  </h3>
+                  <div className="grid grid-cols-1 gap-3">
+                    <button 
+                      onClick={() => router.push('/user/search')}
+                      className="neu-soft p-4 rounded-xl hover:bg-blue-50 transition-all duration-200 text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <div>
+                          <p className="font-semibold text-sm">Find Providers</p>
+                          <p className="text-xs text-gray-500">Search nearby clinics</p>
+                        </div>
+                      </div>
+                    </button>
+                    
+                    <button 
+                      onClick={() => router.push('/user/messages')}
+                      className="neu-soft p-4 rounded-xl hover:bg-green-50 transition-all duration-200 text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                        <div>
+                          <p className="font-semibold text-sm">Messages</p>
+                          <p className="text-xs text-gray-500">Chat with providers</p>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button 
+                      onClick={() => router.push('/user/profile/me')}
+                      className="neu-soft p-4 rounded-xl hover:bg-purple-50 transition-all duration-200 text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-purple-500 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <div>
+                          <p className="font-semibold text-sm">My Profile</p>
+                          <p className="text-xs text-gray-500">View & edit profile</p>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+                <br />
+                <br />
+                <section className="platform-benefits">
+                  <h3 className="font-bold capitalize text-[18px] md:text-[20px] mb-4">
+                    Why Use Medliink?
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="neu-soft p-4 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">Multiple Providers</h4>
+                          <p className="text-xs text-gray-600">Access various hospitals and clinics from one platform</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="neu-soft p-4 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">Instant Booking</h4>
+                          <p className="text-xs text-gray-600">Book appointments quickly without phone calls</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="neu-soft p-4 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">AI-Powered Help</h4>
+                          <p className="text-xs text-gray-600">Get preliminary health guidance anytime</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="neu-soft p-4 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-1">Find Nearby Care</h4>
+                          <p className="text-xs text-gray-600">Locate healthcare providers near your location</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </section>
               </section>
 
-              <section className="health-care-history w-full md:hidden my-5 p-2">
-                <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                  healthcare history
-                </h3>
-
-                {userDashboardInfo?.healthCareHistory?.length === 0 ? (
-                  <Text className="text-center my-5 text-sm">
-                    No healthcare history
-                  </Text>
-                ) : (
-                  <Text>History dey</Text>
-                )}
-              </section>
               <form
                 className="bg-blue-100 h-4/6 absolute overflow-x-hidden scroll-smooth overflow-y-auto md:w-[28rem] w-11/12 transform-gpu transition duration-150 ease-linear scale-0 rounded-lg shadow-md  bottom-3  right-2 z-[10000]"
                 ref={chatBotRef}

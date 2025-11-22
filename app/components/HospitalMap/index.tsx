@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import map components to avoid SSR issues
@@ -38,6 +38,7 @@ interface HospitalMapProps {
 const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onClose }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [L, setL] = useState<any>(null);
+  const mapKey = useRef(`map-${Date.now()}`); // Unique key for the map
 
   useEffect(() => {
     setIsMounted(true);
@@ -46,6 +47,11 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
     import('leaflet').then((leaflet) => {
       setL(leaflet.default);
     });
+
+    // Cleanup function to remove map container
+    return () => {
+      setIsMounted(false);
+    };
   }, []);
 
   // Fix for default marker icons in Leaflet
@@ -130,9 +136,11 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
         {/* Real Map */}
         <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] z-0">
           <MapContainer
+            key={mapKey.current}
             center={[userLocation.lat, userLocation.lng]}
             zoom={13}
             style={{ height: "100%", width: "100%" }}
+            scrollWheelZoom={false}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

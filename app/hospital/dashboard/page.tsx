@@ -12,6 +12,10 @@ import {
   useGetHospitalQuery,
   useGetLatestAppointmentsQuery,
   userAppointmentInfoProps,
+  useGetReviewByHospitalIdQuery,
+  useGetHospitalRatingQuery,
+  saveReviewInfo,
+  reviewProps,
 } from "@/app/store/slices/user.slice";
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import { useRouter } from "next/navigation";
@@ -24,6 +28,7 @@ import DashboardCard from "@/app/components/DashboardCard/DashboardCard";
 import { HospitalDashboardQuickActions } from "@/app/components/DashboardQuickActions/DashboardQuickActions";
 import { HealthcareHistoryDashboard } from "@/app/components/HealthCareHistory";
 import Seo from "@/app/components/Seo/Seo";
+import { FaStar } from "react-icons/fa";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -44,12 +49,17 @@ const Home = () => {
     }
   }, [hospitalData]);
 
-  const { userDashboardInfo, recentAppointmentInfo } = useAppSelector(
+  const { userDashboardInfo, recentAppointmentInfo, userReviewInfo } = useAppSelector(
     (state) => state.user
   );
 
   const { data: latestAppointmentData, isLoading: latestAppointmentLoading } =
     useGetLatestAppointmentsQuery(dataToPass);
+
+  const { data: reviewsData, isLoading: reviewsLoading } = 
+    useGetReviewByHospitalIdQuery(userInfo?._id);
+
+  const { data: ratingData } = useGetHospitalRatingQuery(userInfo?._id);
 
   useEffect(() => {
     if (latestAppointmentData) {
@@ -58,9 +68,22 @@ const Home = () => {
     }
   }, [latestAppointmentData]);
 
+  useEffect(() => {
+    if (reviewsData) {
+      dispatch(saveReviewInfo(reviewsData.data));
+    }
+  }, [reviewsData]);
+
   const handleViewAppointmentClick = () => {
     router.push("/hospital/appointments/");
   };
+
+  const handleViewReviewsClick = () => {
+    router.push("/hospital/profile/me/reviews");
+  };
+
+  const averageRating = ratingData?.averageRating || 0;
+  const totalReviews = userReviewInfo?.length || 0;
 
   return (
     <>
@@ -89,37 +112,6 @@ const Home = () => {
               </section>
 
               <section className="first-section w-full xl:w-8/12 hidden md:flex flex-col items-center justify-center ">
-                <section className="stats-container grid p-1 lg:grid-cols-3 gap-10 w-full">
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
-                    <BsCameraVideo className="w-8 h-8" />
-                    <Text>
-                      {userDashboardInfo?.appointments?.length}{" "}
-                      {userDashboardInfo?.appointments?.length! > 1
-                        ? "Appointments"
-                        : "Appointment"}
-                    </Text>
-                  </section>
-
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
-                    <HiOutlineShieldCheck className="w-8 h-8" />
-                    <Text>
-                      {userDashboardInfo?.allTotalAppointments} total{" "}
-                      {userDashboardInfo?.allTotalAppointments! > 1
-                        ? "Checkups"
-                        : "Checkup"}
-                    </Text>
-                  </section>
-                  <section className="bg-gray-100 h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
-                    <SlBadge className="w-8 h-8" />
-                    <Text>
-                      {userDashboardInfo?.reviews?.length} total{" "}
-                      {userDashboardInfo?.reviews?.length! > 1
-                        ? "Reviews"
-                        : "Review"}
-                    </Text>
-                  </section>
-                </section>
-
                 <section className="health-care-history w-full my-5 p-2">
                   <HealthcareHistoryDashboard 
                     userType="hospital"
@@ -132,8 +124,50 @@ const Home = () => {
               </section>
 
               <section className="second-section w-full xl:w-4/12 mt-16 md:mt-0 grid grid-cols-1 items-center justify-center p-1 md:p-2 ">
-                <section className="user-appointments">
-                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
+                {/* Reviews Summary Section */}
+                <section className="reviews-summary mb-6">
+                  <h3 className="font-bold capitalize text-[18px] md:text-[20px] mb-3">
+                    patient reviews
+                  </h3>
+                  
+                  <section className="bg-white rounded-lg p-4 neu-card">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-x-2">
+                        <FaStar className="text-yellow-400 w-6 h-6" />
+                        <span className="text-2xl font-bold neu-text-primary">
+                          {averageRating.toFixed(1)}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm neu-text-secondary">
+                          {totalReviews} {totalReviews === 1 ? 'review' : 'reviews'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaStar
+                          key={star}
+                          className={`w-4 h-4 ${
+                            star <= Math.round(averageRating)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+
+                    <Button
+                      className="w-full bg-accent"
+                      onClick={handleViewReviewsClick}
+                    >
+                      View All Reviews
+                    </Button>
+                  </section>
+                </section>
+
+                <section className="user-appointments">\n                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
                     recent appointments
                   </h3>
 

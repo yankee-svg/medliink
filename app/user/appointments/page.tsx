@@ -155,52 +155,52 @@ const Appointment = () => {
                     </Text>
                   </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {medicalServices.map((service) => {
                     const IconComponent = service.icon;
                     return (
                       <div
                         key={service.id}
-                        className="group relative neu-card rounded-2xl transition-all duration-300 overflow-hidden"
+                        className="group relative neu-card rounded-xl transition-all duration-300 overflow-hidden"
                       >
                         {/* Decorative top bar */}
-                        <div className={`h-1.5 bg-gradient-to-r ${service.color}`}></div>
+                        <div className={`h-1 bg-gradient-to-r ${service.color}`}></div>
                         
                         {/* Card content */}
-                        <div className="p-6">
+                        <div className="p-4">
                           {/* Icon and title */}
-                          <div className="flex items-start gap-4 mb-4">
-                            <div className={`p-3 rounded-xl neu-pressed group-hover:scale-110 transition-transform duration-300`}>
-                              <IconComponent className={`h-7 w-7 ${service.iconColor}`} />
+                          <div className="flex items-start gap-3 mb-3">
+                            <div className={`p-2 rounded-lg neu-pressed group-hover:scale-110 transition-transform duration-300`}>
+                              <IconComponent className={`h-5 w-5 ${service.iconColor}`} />
                             </div>
                             <div className="flex-1">
-                              <h4 className="font-bold text-lg neu-text-primary mb-1 group-hover:text-blue-600 transition-colors">
+                              <h4 className="font-bold text-base neu-text-primary mb-0.5 group-hover:text-blue-600 transition-colors">
                                 {service.name}
                               </h4>
-                              <p className="text-sm neu-text-muted">
+                              <p className="text-xs neu-text-muted">
                                 {service.description}
                               </p>
                             </div>
                           </div>
                           
                           {/* Divider */}
-                          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-4"></div>
+                          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-3"></div>
                           
                           {/* Hospitals section */}
-                          <div className="mb-4">
-                            <div className="flex items-center gap-2 mb-3">
-                              <HiLocationMarker className="h-4 w-4 text-blue-500" />
+                          <div className="mb-3">
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <HiLocationMarker className="h-3.5 w-3.5 text-blue-500" />
                               <span className="text-xs font-semibold neu-text-secondary uppercase tracking-wide">
                                 Available Locations
                               </span>
                             </div>
-                            <div className="space-y-2 max-h-24 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">
+                            <div className="space-y-1.5 max-h-20 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">
                               {service.hospitals.map((hospital, idx) => (
                                 <div
                                   key={idx}
-                                  className="flex items-center gap-2.5 text-sm neu-text-primary py-1.5 px-3 rounded-lg neu-pressed-light hover:neu-raised transition-all duration-200"
+                                  className="flex items-center gap-2 text-xs neu-text-primary py-1 px-2 rounded-lg neu-pressed-light hover:neu-raised transition-all duration-200"
                                 >
-                                  <div className="h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex-shrink-0"></div>
+                                  <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex-shrink-0"></div>
                                   <span className="font-medium">{hospital}</span>
                                 </div>
                               ))}
@@ -208,22 +208,22 @@ const Appointment = () => {
                           </div>
                           
                           {/* Stats badges */}
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 neu-pressed-light rounded-full">
-                              <HiClock className="h-3.5 w-3.5 text-green-600" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="flex items-center gap-1 px-2 py-1 neu-pressed-light rounded-full">
+                              <HiClock className="h-3 w-3 text-green-600" />
                               <span className="text-xs font-semibold text-green-700">24/7 Available</span>
                             </div>
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 neu-pressed-light rounded-full">
-                              <HiUser className="h-3.5 w-3.5 text-purple-600" />
+                            <div className="flex items-center gap-1 px-2 py-1 neu-pressed-light rounded-full">
+                              <HiUser className="h-3 w-3 text-purple-600" />
                               <span className="text-xs font-semibold text-purple-700">{service.hospitals.length} Centers</span>
                             </div>
                           </div>
                           
                           {/* Action button */}
                           <Link href="/user/search" className="block">
-                            <button className={`w-full py-3 px-4 rounded-xl font-semibold text-white bg-gradient-to-r ${service.color} hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2`}>
+                            <button className={`w-full py-2 px-3 rounded-lg font-semibold text-sm text-white bg-gradient-to-r ${service.color} hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2`}>
                               <span>Book Appointment</span>
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -231,7 +231,7 @@ const Appointment = () => {
                         </div>
                         
                         {/* Hover effect overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none rounded-xl"></div>
                       </div>
                     );
                   })}
