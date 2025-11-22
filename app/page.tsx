@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <section>
+    <section className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       <Layout>
         <Navbar />
         <section className="m-auto w-full">

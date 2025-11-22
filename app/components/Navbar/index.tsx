@@ -38,7 +38,7 @@ const Navbar: React.FC = (): JSX.Element => {
   ];
 
   return (
-    <nav className="w-screen flex items-center md:justify-center justify-between md:flex-row flex-col py-5 overflow-x-hidden z-10">
+    <nav className="w-screen flex items-center md:justify-center justify-between md:flex-row flex-col pt-5 pb-5 overflow-x-hidden z-10">
       <div className="neu-raised px-6 py-3 rounded-2xl mx-5">
         <h2 className="neu-text-primary font-extrabold text-2xl md:text-4xl cursor-pointer">
           <Link href="/" className="flex items-center">
@@ -48,18 +48,6 @@ const Navbar: React.FC = (): JSX.Element => {
           </Link>
         </h2>
       </div>
-
-      <section className="hidden md:flex items-end justify-end w-4/6 overflow-x-hidden space-x-4">
-        {navItems.map((navItem, index) => {
-          return (
-            <Link key={index} href={navItem.link}>
-              <div className={navItemsClassname}>
-                {navItem.element}
-              </div>
-            </Link>
-          );
-        })}
-      </section>
 
       <section className="md:hidden flex w-full flex-col">
         <section className="header flex w-full items-center justify-between">

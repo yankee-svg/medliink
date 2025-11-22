@@ -8,7 +8,6 @@ import { GoBell } from "react-icons/go";
 import { IoIosArrowBack } from "react-icons/io";
 import { HiOfficeBuilding } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import ThemeSwitcher from "../ThemeSwitcher";
 
 interface AppHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -25,9 +24,16 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
     useState(false);
   const [isProfileDropdownVisible, setIsProfileDropdownVisible] =
     useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('https://api.dicebear.com/7.x/micah/svg?seed=user');
 
-  const notificationRef: any = useRef(null);
-  const profileRef: any = useRef(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (userInfo) {
+      setAvatarUrl(userInfo.profilePicture || `https://api.dicebear.com/7.x/micah/svg?seed=${userInfo.username || 'user'}`);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     const closeDropdowns = (event: MouseEvent) => {
@@ -184,9 +190,6 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
       )}
 
       <section className="user-profile flex items-center gap-x-4">
-        {/* Theme Switcher */}
-        <ThemeSwitcher className="hidden md:block" />
-
         <section
           className="notification cursor-pointer relative"
           ref={notificationRef}
@@ -218,7 +221,7 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
           <div className="w-10 rounded-full" onClick={toggleProfileDropdown}>
             <img
               className=""
-              src={userInfo?.profilePicture || `https://api.dicebear.com/7.x/micah/svg?seed=${userInfo?.username || 'user'}`}
+              src={avatarUrl}
               alt="user profile image"
             />
           </div>
@@ -258,9 +261,16 @@ export const HospitalAppHeader = ({
     useState(false);
   const [isProfileDropdownVisible, setIsProfileDropdownVisible] =
     useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('https://api.dicebear.com/7.x/micah/svg?seed=user');
 
-  const notificationRef: any = useRef(null);
-  const profileRef: any = useRef(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (userInfo) {
+      setAvatarUrl(userInfo.profilePicture || `https://api.dicebear.com/7.x/micah/svg?seed=${userInfo.username || 'user'}`);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     const closeDropdowns = (event: MouseEvent) => {
@@ -415,9 +425,6 @@ export const HospitalAppHeader = ({
       )}
 
       <section className="user-profile flex items-center gap-x-4">
-        {/* Theme Switcher */}
-        <ThemeSwitcher className="hidden md:block" />
-
         <section
           className="notification cursor-pointer relative"
           ref={notificationRef}

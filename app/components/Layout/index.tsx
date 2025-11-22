@@ -7,7 +7,7 @@ interface LayoutProps {
 const Layout = ({ className, children, others }: LayoutProps): JSX.Element => {
   return (
     <section
-      className={`w-full md:my-5 md:items-start flex flex-col  overflow-x-hidden ${className}`}
+      className={`w-full md:items-start flex flex-col overflow-x-hidden ${className}`}
       {...others}
     >
      
