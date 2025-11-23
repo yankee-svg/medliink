@@ -148,17 +148,27 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
       text: "Logout",
       onClick: async () => {
         try {
+          // Clear local state and storage first
+          dispatch(resetUser());
+          dispatch(logoutUser());
+          
+          // Then call API to logout and clear cookies
           const response = await logout({}).unwrap();
           toast.success(response?.message || "Logged out successfully");
-          dispatch(logoutUser());
-          dispatch(resetUser());
-          // Use window.location for hard redirect to ensure middleware processes correctly
-          window.location.href = "/auth/login";
+          
+          // Force a complete page reload to clear all state and cookies
+          setTimeout(() => {
+            window.location.replace("/auth/login");
+          }, 100);
         } catch (error: any) {
           // Even if API fails, still logout locally
-          dispatch(logoutUser());
           dispatch(resetUser());
-          window.location.href = "/auth/login";
+          dispatch(logoutUser());
+          
+          // Force reload to login page
+          setTimeout(() => {
+            window.location.replace("/auth/login");
+          }, 100);
         }
       },
     },
@@ -383,17 +393,27 @@ export const HospitalAppHeader = ({
       text: "Logout",
       onClick: async () => {
         try {
+          // Clear local state and storage first
+          dispatch(resetUser());
+          dispatch(logoutUser());
+          
+          // Then call API to logout and clear cookies
           const response = await logout({}).unwrap();
           toast.success(response?.message || "Logged out successfully");
-          dispatch(logoutUser());
-          dispatch(resetUser());
-          // Use window.location for hard redirect to ensure middleware processes correctly
-          window.location.href = "/auth/login";
+          
+          // Force a complete page reload to clear all state and cookies
+          setTimeout(() => {
+            window.location.replace("/auth/login");
+          }, 100);
         } catch (error: any) {
           // Even if API fails, still logout locally
-          dispatch(logoutUser());
           dispatch(resetUser());
-          window.location.href = "/auth/login";
+          dispatch(logoutUser());
+          
+          // Force reload to login page
+          setTimeout(() => {
+            window.location.replace("/auth/login");
+          }, 100);
         }
       },
     },

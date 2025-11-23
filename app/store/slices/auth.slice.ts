@@ -32,10 +32,15 @@ const authSlice = createSlice({
     logoutUser: () => {
       if (typeof window !== "undefined") {
         localStorage.removeItem("userInfo");
+        localStorage.clear(); // Clear all localStorage to ensure clean logout
 
-        //logout the user
+        //logout the user and clear cookie
         const logoutUser = async () => {
-          await axios.post("/api/auth/reset-token");
+          try {
+            await axios.post("/api/auth/reset-token");
+          } catch (error) {
+            console.error("Error clearing auth cookie:", error);
+          }
         };
         
         logoutUser();

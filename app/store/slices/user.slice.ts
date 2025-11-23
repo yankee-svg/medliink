@@ -360,30 +360,36 @@ const userSlice = createSlice({
 
     clearHospitalSearchInfo: (state, action) => {
       state.hospitalSearchInfo = null;
-      localStorage.removeItem("userHospitalSearchInfo");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("userHospitalSearchInfo");
+      }
     },
 
     clearUserSearchInfo: (state, action) => {
       state.userSearchInfo = null;
-      localStorage.removeItem("hospitalUserSearchInfo");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("hospitalUserSearchInfo");
+      }
     },
 
     resetUser: () => {
-      localStorage.removeItem("userDashboardInfo");
-      localStorage.removeItem("userAppointmentInfo");
-      localStorage.removeItem("userRecentAppointmentInfo");
-      localStorage.removeItem("userHealthCareHistoryInfo");
-      localStorage.removeItem("userHospitalSearchInfo");
-      localStorage.removeItem("userHospitalSearchProfileInfo");
-      localStorage.removeItem("hospitalUserSearchInfo");
-      localStorage.removeItem("userSpecificAppointmentInfo");
-      localStorage.removeItem("hospitalUserSearchProfileInfo");
-      localStorage.removeItem("onlineHospitals");
-      localStorage.removeItem("onlineUsers");
-      localStorage.removeItem("roomToken");
-      localStorage.removeItem("currentTypingMessage");
-      localStorage.removeItem("userReviewInfo");
-      localStorage.removeItem("userSpecificReviewInfo");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("userDashboardInfo");
+        localStorage.removeItem("userAppointmentInfo");
+        localStorage.removeItem("userRecentAppointmentInfo");
+        localStorage.removeItem("userHealthCareHistoryInfo");
+        localStorage.removeItem("userHospitalSearchInfo");
+        localStorage.removeItem("userHospitalSearchProfileInfo");
+        localStorage.removeItem("hospitalUserSearchInfo");
+        localStorage.removeItem("userSpecificAppointmentInfo");
+        localStorage.removeItem("hospitalUserSearchProfileInfo");
+        localStorage.removeItem("onlineHospitals");
+        localStorage.removeItem("onlineUsers");
+        localStorage.removeItem("roomToken");
+        localStorage.removeItem("currentTypingMessage");
+        localStorage.removeItem("userReviewInfo");
+        localStorage.removeItem("userSpecificReviewInfo");
+      }
     },
   },
 });

@@ -36,17 +36,27 @@ const Settings = () => {
 
   const handleLogoutClick = async () => {
     try {
-      const response: any = await logout({});
-      toast.success(response?.data?.message || "Logged out successfully");
+      // Clear local state and storage first
       dispatch(resetUser());
       dispatch(logoutUser());
-      // Use window.location for hard redirect
-      window.location.href = "/auth/login";
+      
+      // Then call API to logout and clear cookies
+      const response: any = await logout({});
+      toast.success(response?.data?.message || "Logged out successfully");
+      
+      // Force a complete page reload to clear all state and cookies
+      setTimeout(() => {
+        window.location.replace("/auth/login");
+      }, 100);
     } catch (error) {
       // Even if API fails, still logout locally
       dispatch(resetUser());
       dispatch(logoutUser());
-      window.location.href = "/auth/login";
+      
+      // Force reload to login page
+      setTimeout(() => {
+        window.location.replace("/auth/login");
+      }, 100);
     }
   };
 

@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Backend build output
+backend/medliink-api/dist/
+backend/medliink-api/node_modules/
+backend/medliink-api/.env
+backend/medliink-api/package-lock.json

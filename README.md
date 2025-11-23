@@ -2,13 +2,52 @@
 
 **Live Demo**: [medliink.vercel.app](https://medliink.vercel.app)
 
-**Backend Repository**: [https://github.com/yankee-svg/medliink-api](https://github.com/yankee-svg/medliink-api)
-
 **Database**: [MongoDB Atlas Cluster](https://cloud.mongodb.com/v2/69177e83175d2115fbda7c3e#/clusters)
 
-## Test Credentials
+> **Note**: This is a monorepo containing both the frontend (Next.js) and backend (Express API) in a single repository.
+
+## 📚 Documentation
+
+- **[Quick Start Guide](./QUICKSTART.md)** - Get up and running in minutes
+- **[Full Setup Guide](./SETUP.md)** - Comprehensive installation and configuration
+- **[Monorepo Guide](./MONOREPO.md)** - Understanding the monorepo structure
+- **[Backend API Docs](./backend/medliink-api/DOCUMENTATION.md)** - API documentation
+
+## 🔑 Test Credentials
+
+### Patient/User Account
 - **Email**: emerybarame60@gmail.com
 - **Password**: 321123
+- **Role**: Patient (User)
+
+### Hospital Accounts (Rwanda Hospitals)
+
+All hospital accounts use the same password for testing: **hospital123**
+
+| Hospital Name | Username | Email | Location |
+|--------------|----------|-------|----------|
+| King Faisal Hospital | `kingfaisal` | info@kfh.rw | Kigali, Gasabo |
+| CHUK | `chuk` | info@chuk.rw | Kigali, Nyarugenge |
+| CHUB | `chub` | info@chub.rw | Huye, Southern Province |
+| Rwanda Military Hospital | `rwandamilitary` | info@rmh.rw | Kigali, Kicukiro |
+| Kibagabaga District Hospital | `kibagabaga` | info@kibagabaga.rw | Kigali, Gasabo |
+| Nyamata District Hospital | `nyamata` | info@nyamata.rw | Bugesera |
+| Masaka District Hospital | `masaka` | info@masaka.rw | Kigali, Kicukiro |
+| KUTH | `kuth` | info@kuth.rw | Kigali, Nyarugenge |
+| Rwamagana Provincial Hospital | `rwamagana` | info@rwamagana.rw | Eastern Province |
+| Muhima District Hospital | `muhima` | info@muhima.rw | Kigali, Nyarugenge |
+| Gisenyi District Hospital | `gisenyi` | info@gisenyi.rw | Rubavu, Western Province |
+| Rwinkwavu District Hospital | `rwinkwavu` | info@rwinkwavu.rw | Kayonza |
+| Shyira District Hospital | `shyira` | info@shyira.rw | Nyabihu |
+| Nemba District Hospital | `nemba` | info@nemba.rw | Gakenke |
+| Byumba District Hospital | `byumba` | info@byumba.rw | Gicumbi, Northern Province |
+
+**Quick Login Examples:**
+- Username: `kingfaisal` | Password: `hospital123` (Cardiology, Oncology, ICU)
+- Username: `chuk` | Password: `hospital123` (Neurology, Orthopedics, ICU)
+- Username: `rwandamilitary` | Password: `hospital123` (Cardiology, Physical Therapy)
+
+> **Note**: To seed hospital data into your local database, run: `npm run backend:seed`
 
 ## Overview
 
@@ -56,14 +95,16 @@ Think of it as the "Uber for Healthcare" - connecting those who need medical ser
 - **HTTP Client**: Axios
 - **TypeScript**: For type safety
 
-### Backend (Separate Repository)
+### Backend
 - **Runtime**: Node.js with Express.js
-- **Database**: MongoDB
+- **Database**: MongoDB with Mongoose
 - **Authentication**: JWT (JSON Web Tokens)
 - **Real-Time**: Socket.io
-- **File Storage**: Cloud-based storage integration
-
-**Backend Repository**: [https://github.com/yankee-svg/medliink-api](https://github.com/yankee-svg/medliink-api)
+- **Email**: Nodemailer
+- **AI Integration**: OpenAI API
+- **Video**: LiveKit Server SDK
+- **TypeScript**: For type safety
+- **Location**: `backend/medliink-api/`
 
 ## APIs & Services Used
 
@@ -106,11 +147,11 @@ yarn install
 
 ### Step 3: Set Up Environment Variables
 
-Create a `.env.local` file in the root directory:
+**Frontend** - Create a `.env.local` file in the root directory:
 
 ```env
 # API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_BASE_URL=http://localhost:5000/api
 
 # Anthropic Claude AI (for health assistant)
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
@@ -124,56 +165,104 @@ LIVEKIT_API_SECRET=your_livekit_api_secret
 NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
 ```
 
-### Step 4: Set Up the Backend
+**Backend** - Create a `.env` file in `backend/medliink-api/`:
 
-1. Clone the backend repository:
-```bash
-git clone https://github.com/yankee-svg/medliink-api.git
-cd medliink-api
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# Database
+MONGODB_URI=your_mongodb_connection_string
+
+# JWT Secrets
+JWT_ACCESS_SECRET=your_access_token_secret
+JWT_REFRESH_SECRET=your_refresh_token_secret
+
+# Email Configuration (Nodemailer)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+
+# OpenAI (for AI features)
+OPENAI_API_KEY=your_openai_api_key
+
+# LiveKit
+LIVEKIT_API_KEY=your_livekit_api_key
+LIVEKIT_API_SECRET=your_livekit_api_secret
+LIVEKIT_URL=your_livekit_url
+
+# Frontend URL
+FRONTEND_URL=http://localhost:3000
 ```
 
-2. Follow the setup instructions in the backend repository's README
-3. Make sure the backend is running on `http://localhost:5000` (or update the `NEXT_PUBLIC_API_URL` accordingly)
+### Step 4: Install All Dependencies
 
-### Step 5: Run the Development Server
+Install both frontend and backend dependencies:
 
-**Using bun:**
+```bash
+# Install frontend dependencies
+bun install
+
+# Install backend dependencies
+cd backend/medliink-api
+npm install
+cd ../..
+
+# Or use the convenience script
+bun run install:all
+```
+
+### Step 5: Run the Development Servers
+
+**Option 1: Run both servers simultaneously (recommended)**
+
+```bash
+npm run dev:all
+```
+
+This will start:
+- Frontend at [http://localhost:3000](http://localhost:3000)
+- Backend API at [http://localhost:5000](http://localhost:5000)
+
+**Option 2: Run servers separately**
+
+Terminal 1 (Frontend):
 ```bash
 bun run dev
 ```
 
-**Using npm:**
-```bash
-npm run dev
-```
+Terminal 2 (Backend):
 
-**Using yarn:**
 ```bash
-yarn dev
+npm run backend:dev
 ```
-
-The application will be available at [http://localhost:3000](http://localhost:3000)
 
 ### Step 6: Build for Production
 
-**Using bun:**
+**Frontend:**
+
 ```bash
 bun run build
 bun run start
 ```
 
-**Using npm:**
+**Backend:**
 ```bash
-npm run build
-npm run start
+npm run backend:build
+npm run backend:start
+```
+
+**Or build both:**
+```bash
+npm run build && npm run backend:build
 ```
 
 ## Project Structure
 
 ```
 medliink/
-├── app/                          # Next.js app directory
-│   ├── api/                      # API routes
+├── app/                          # Next.js app directory (Frontend)
+│   ├── api/                      # Next.js API routes
 │   ├── auth/                     # Authentication pages
 │   ├── components/               # Reusable components
 │   │   ├── HospitalMap/         # Interactive map component
@@ -183,9 +272,22 @@ medliink/
 │   ├── user/                     # User dashboard pages
 │   ├── store/                    # Redux store configuration
 │   └── globals.css              # Global styles
+├── backend/                      # Backend API (Monorepo)
+│   └── medliink-api/            # Express.js REST API
+│       ├── config/              # API configuration
+│       ├── controllers/         # Request handlers
+│       ├── middlewares/         # Express middlewares
+│       ├── models/              # Mongoose models
+│       ├── routes/              # API routes
+│       ├── sockets/             # Socket.io handlers
+│       ├── types/               # TypeScript types
+│       ├── utils/               # Utility functions
+│       ├── index.ts             # API entry point
+│       └── package.json         # Backend dependencies
 ├── public/                       # Static assets
-├── config/                       # Configuration files
-└── package.json                  # Dependencies
+├── config/                       # Frontend configuration
+├── package.json                  # Root dependencies & scripts
+└── README.md                     # This file
 ```
 
 
