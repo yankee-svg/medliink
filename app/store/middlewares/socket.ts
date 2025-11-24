@@ -18,8 +18,9 @@ import store from "../store";
 import { logoutUser } from "../slices/auth.slice";
 
 const user: any =
-  typeof window !== "undefined" &&
-  JSON.parse(localStorage.getItem("userDashboardInfo")!);
+  typeof window !== "undefined" && localStorage.getItem("userDashboardInfo")
+    ? JSON.parse(localStorage.getItem("userDashboardInfo")!)
+    : null;
 
 const socketServerUrl =
   process.env.NEXT_PUBLIC_BASE_SOCKET_URL ||
@@ -28,6 +29,11 @@ const socketServerUrl =
 export const socket = io(socketServerUrl, {
   withCredentials: true,
   query: user,
+  transports: ['websocket', 'polling'],
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 5000,
+  reconnectionAttempts: 5,
 });
 
 function handleAppointmentChange(

@@ -2,7 +2,7 @@ import { logoutUser } from "@/app/store/slices/auth.slice";
 import { resetUser, useLogoutMutation } from "@/app/store/slices/user.slice";
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
 import { GoBell } from "react-icons/go";
 import { IoIosArrowBack } from "react-icons/io";
@@ -79,29 +79,23 @@ const AppHeader = ({ className, showWelcomeMessage }: AppHeaderProps) => {
     setIsProfileDropdownVisible(!isProfileDropdownVisible);
   };
 
-  const notificationItems = [
+  const notificationItems = useMemo(() => [
     {
       id: 1,
       text: "New message from Mango",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
     {
       id: 2,
       text: "Reminder: Appointment at 3 PM",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
     {
       id: 3,
       text: "Mayfair accepted your appointment",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
-  ];
+  ], []);
 
   const profileMenuItems = [
     {
@@ -283,6 +277,8 @@ export const HospitalAppHeader = ({
   }, [userInfo]);
 
   useEffect(() => {
+    if (!isNotificationDropdownVisible && !isProfileDropdownVisible) return;
+
     const closeDropdowns = (event: MouseEvent) => {
       if (
         isNotificationDropdownVisible &&
@@ -291,17 +287,6 @@ export const HospitalAppHeader = ({
       ) {
         setIsNotificationDropdownVisible(false);
       }
-    };
-
-    window.addEventListener("click", closeDropdowns);
-
-    return () => {
-      window.removeEventListener("click", closeDropdowns);
-    };
-  }, [isNotificationDropdownVisible]);
-
-  useEffect(() => {
-    const closeDropdowns = (event: MouseEvent) => {
       if (
         isProfileDropdownVisible &&
         profileRef.current &&
@@ -316,39 +301,33 @@ export const HospitalAppHeader = ({
     return () => {
       window.removeEventListener("click", closeDropdowns);
     };
-  }, [isProfileDropdownVisible]);
+  }, [isNotificationDropdownVisible, isProfileDropdownVisible]);
 
-  const toggleNotificationDropdown = () => {
-    setIsNotificationDropdownVisible(!isNotificationDropdownVisible);
-  };
+  const toggleNotificationDropdown = useCallback(() => {
+    setIsNotificationDropdownVisible(prev => !prev);
+  }, []);
 
-  const toggleProfileDropdown = () => {
-    setIsProfileDropdownVisible(!isProfileDropdownVisible);
-  };
+  const toggleProfileDropdown = useCallback(() => {
+    setIsProfileDropdownVisible(prev => !prev);
+  }, []);
 
-  const notificationItems = [
+  const notificationItems = useMemo(() => [
     {
       id: 1,
       text: "New message from Emmysoft",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
     {
       id: 2,
       text: "Reminder: Appointment at 5 PM",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
     {
       id: 3,
       text: "Emmysoft booked an appointment",
-      onClick: () => {
-        console.log(`Hello notification`);
-      },
+      onClick: () => {},
     },
-  ];
+  ], []);
 
   const profileMenuItems = [
     {

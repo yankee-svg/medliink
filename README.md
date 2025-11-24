@@ -11,6 +11,7 @@
 - **[Quick Start Guide](./QUICKSTART.md)** - Get up and running in minutes
 - **[Full Setup Guide](./SETUP.md)** - Comprehensive installation and configuration
 - **[Monorepo Guide](./MONOREPO.md)** - Understanding the monorepo structure
+- **[Performance Guide](./PERFORMANCE.md)** - Performance optimization tips
 - **[Backend API Docs](./backend/medliink-api/DOCUMENTATION.md)** - API documentation
 
 ## 🔑 Test Credentials

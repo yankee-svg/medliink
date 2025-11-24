@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "ANALYZE=true next build",
     "backend:dev": "cd backend/medliink-api && npm run dev",
     "backend:build": "cd backend/medliink-api && npm run build",
     "backend:start": "cd backend/medliink-api && npm start",
