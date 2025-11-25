@@ -101,7 +101,7 @@ export default function Settings() {
         description="Your hospital settings"
         keywords="Hospital settings, your settings"
       />
-      <div className="w-screen h-screen bg-zinc-50">
+      <div className="w-screen h-screen bg-white">
         {isLoading ? (
           <Loader />
         ) : (
@@ -119,7 +119,7 @@ export default function Settings() {
                   <section className="profile-section w-full p-2 my-5 flex items-center gap-x-5 md:gap-x-20">
                     <div className="avatar cursor-pointer">
                       <div className="w-24 h-24 rounded-full border-4 border-accent shadow-lg bg-white flex items-center justify-center p-4">
-                        <img src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png" alt="Hospital" className="w-full h-full object-contain" />
+                        <img src="/medliink.png" alt="Hospital" className="w-full h-full object-contain" />
                       </div>
                       <section className="pen-container bg-accent flex items-center justify-center rounded-full w-6 h-6 transform-gpu text-white translate-y-12 -translate-x-7 hover:scale-110 duration-100 ease-linear hover:bg-secondary hover:text-slate-200">
                         <Link href={"/hospital/profile"}>

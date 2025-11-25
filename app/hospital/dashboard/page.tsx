@@ -16,6 +16,7 @@ import {
   useGetHospitalRatingQuery,
   saveReviewInfo,
   reviewProps,
+  useGetAllUsersQuery,
 } from "@/app/store/slices/user.slice";
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import { useRouter } from "next/navigation";
@@ -33,6 +34,7 @@ import { FaStar } from "react-icons/fa";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data: hospitalData, isLoading } = useGetHospitalQuery({});
+  const { data: allUsersData } = useGetAllUsersQuery({});
   const { userInfo } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const healthCareHistoryRef = useRef<HTMLDivElement | any>(null);
@@ -57,9 +59,9 @@ const Home = () => {
     useGetLatestAppointmentsQuery(dataToPass);
 
   const { data: reviewsData, isLoading: reviewsLoading } = 
-    useGetReviewByHospitalIdQuery(userInfo?._id);
+    useGetReviewByHospitalIdQuery(userInfo?._id, { skip: !userInfo?._id });
 
-  const { data: ratingData } = useGetHospitalRatingQuery(userInfo?._id);
+  const { data: ratingData } = useGetHospitalRatingQuery(userInfo?._id, { skip: !userInfo?._id });
 
   useEffect(() => {
     if (latestAppointmentData) {
@@ -92,7 +94,7 @@ const Home = () => {
         description="Hospital dashboard"
         keywords="hospital dashboard, dashboard"
       />
-      <div className="w-screen h-screen bg-zinc-50">
+      <div className="w-screen h-screen bg-white">
         {isLoading ? (
           <Loader />
         ) : (
@@ -115,7 +117,7 @@ const Home = () => {
                 <section className="health-care-history w-full my-5 p-2">
                   <HealthcareHistoryDashboard 
                     userType="hospital"
-                    totalPatients={userDashboardInfo?.allTotalAppointments || 0}
+                    totalPatients={allUsersData?.data?.length || 0}
                     todayAppointments={userDashboardInfo?.appointments?.length || 0}
                     successRate={94.2}
                     avgWaitTime={12}
@@ -210,7 +212,7 @@ const Home = () => {
               <section className="health-care-history w-full md:hidden my-5 p-1">
                 <HealthcareHistoryDashboard 
                   userType="hospital"
-                  totalPatients={userDashboardInfo?.allTotalAppointments || 0}
+                  totalPatients={allUsersData?.data?.length || 0}
                   todayAppointments={userDashboardInfo?.appointments?.length || 0}
                   successRate={94.2}
                   avgWaitTime={12}

@@ -452,7 +452,7 @@ export const HospitalAppHeader = ({
         </section>
         <div className="avatar cursor-pointer relative" ref={profileRef}>
           <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg border-2 border-blue-200" onClick={toggleProfileDropdown}>
-            <img src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png" alt="Hospital" className="w-8 h-8 object-contain" />
+            <img src="/medliink.png" alt="Hospital" className="w-8 h-8 object-contain" />
           </div>
 
           {isProfileDropdownVisible && (

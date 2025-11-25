@@ -214,7 +214,7 @@ export default function Profile() {
     return (
       <>
         <Seo title="Update profile" description="Your hospital profile" />
-        <div className="w-screen h-screen bg-zinc-50">
+        <div className="w-screen h-screen bg-white">
           <HospitalSidebarNav>
             <div className="flex items-center justify-center h-64">
               <Loader />
@@ -250,7 +250,7 @@ export default function Profile() {
                     <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-2xl overflow-hidden bg-white p-4">
                       <img
                         className="w-full h-full object-contain"
-                        src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png"
+                        src="/medliink.png"
                         alt="Hospital Logo"
                       />
                     </div>

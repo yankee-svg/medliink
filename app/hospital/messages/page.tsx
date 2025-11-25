@@ -12,7 +12,7 @@ const Messages = () => {
         description="Your messages with users"
         keywords="Message with user, messages"
       />
-      <div className="w-screen h-screen bg-zinc-50">
+      <div className="w-screen h-screen bg-white">
         <HospitalSidebarNav>
           <section className="appointments my-5">
             <h3 className="font-bold text-2xl capitalize text-accent">

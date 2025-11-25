@@ -11,7 +11,7 @@ import {
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { GrLocation } from "react-icons/gr";
 import { HiOutlineShieldCheck } from "react-icons/hi";
 import { MdDateRange } from "react-icons/md";
@@ -19,9 +19,10 @@ import { SlBadge } from "react-icons/sl";
 import { useDispatch } from "react-redux";
 import Seo from "@/app/components/Seo/Seo";
 
-const UserProfile = ({ params }: { params: { userId: string } }) => {
+const UserProfile = ({ params }: { params: Promise<{ userId: string }> }) => {
+  const { userId } = use(params);
   const dispatch = useDispatch<AppDispatch>();
-  const { data, isLoading, isError } = useGetUserByIdQuery(params.userId);
+  const { data, isLoading, isError } = useGetUserByIdQuery(userId);
   const { userSearchProfileInfo } = useAppSelector((state) => state.user);
 
   const router = useRouter();

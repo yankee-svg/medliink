@@ -163,7 +163,7 @@ const MessagesContent = () => {
                   <div className="avatar online">
                     <div className="w-24 rounded-full bg-white flex items-center justify-center border-2 border-blue-200 p-4">
                       <img
-                        src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png"
+                        src="/medliink.png"
                         className="w-full h-full object-contain"
                         alt="hospital"
                       />

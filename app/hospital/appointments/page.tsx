@@ -33,7 +33,7 @@ const Appointment = () => {
         description="Your appointments with users"
         keywords="Hospital appointments, appointments"
       />
-      <div className="w-screen h-screen bg-zinc-50">
+      <div className="w-screen h-screen bg-white">
         {isLoading ? (
           <Loader />
         ) : (

@@ -79,7 +79,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                     <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-2xl overflow-hidden bg-white p-4">
                       <img
                         className="w-full h-full object-contain"
-                        src="https://i.postimg.cc/4dfFhjgW/hospital-icon.png"
+                        src="/medliink.png"
                         alt="Hospital Logo"
                       />
                     </div>
