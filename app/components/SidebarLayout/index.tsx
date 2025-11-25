@@ -134,96 +134,95 @@ export const HospitalSidebarNav = ({
   const currentPath = usePathname();
 
   return (
-    <section className="parent h-screen w-screen flex justify-between">
-      <div
-        className={`bg-[#1E3A8A] h-screen hidden md:flex md:w-3/12  lg:w-2/12 items-center justify-start flex-col  p-0  fixed ${className} `}
-      >
-        <section className="sidebar-header my-4 w-11/12 p-2">
-          <h2 className="font-bold text-[20px] capitalize flex items-center text-white">
+    <section className="parent h-screen w-screen flex flex-col">
+      {/* Top Horizontal Navbar for Desktop */}
+      <nav className="hidden md:flex bg-[#1E3A8A] w-full h-20 items-center justify-between px-8 fixed top-0 left-0 right-0 z-50 shadow-lg">
+        {/* Logo Section */}
+        <div className="flex items-center gap-x-3">
+          <h2 className="font-bold text-2xl text-white flex items-center gap-x-2">
             medliink
-            <span>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="white"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21.5609 10.7386L20.2009 9.15859C19.9409 8.85859 19.7309 8.29859 19.7309 7.89859V6.19859C19.7309 5.13859 18.8609 4.26859 17.8009 4.26859H16.1009C15.7109 4.26859 15.1409 4.05859 14.8409 3.79859L13.2609 2.43859C12.5709 1.84859 11.4409 1.84859 10.7409 2.43859L9.17086 3.80859C8.87086 4.05859 8.30086 4.26859 7.91086 4.26859H6.18086C5.12086 4.26859 4.25086 5.13859 4.25086 6.19859V7.90859C4.25086 8.29859 4.04086 8.85859 3.79086 9.15859L2.44086 10.7486C1.86086 11.4386 1.86086 12.5586 2.44086 13.2486L3.79086 14.8386C4.04086 15.1386 4.25086 15.6986 4.25086 16.0886V17.7986C4.25086 18.8586 5.12086 19.7286 6.18086 19.7286H7.91086C8.30086 19.7286 8.87086 19.9386 9.17086 20.1986L10.7509 21.5586C11.4409 22.1486 12.5709 22.1486 13.2709 21.5586L14.8509 20.1986C15.1509 19.9386 15.7109 19.7286 16.1109 19.7286H17.8109C18.8709 19.7286 19.7409 18.8586 19.7409 17.7986V16.0986C19.7409 15.7086 19.9509 15.1386 20.2109 14.8386L21.5709 13.2586C22.1509 12.5686 22.1509 11.4286 21.5609 10.7386ZM16.1609 10.1086L11.3309 14.9386C11.1909 15.0786 11.0009 15.1586 10.8009 15.1586C10.6009 15.1586 10.4109 15.0786 10.2709 14.9386L7.85086 12.5186C7.56086 12.2286 7.56086 11.7486 7.85086 11.4586C8.14086 11.1686 8.62086 11.1686 8.91086 11.4586L10.8009 13.3486L15.1009 9.04859C15.3909 8.75859 15.8709 8.75859 16.1609 9.04859C16.4509 9.33859 16.4509 9.81859 16.1609 10.1086Z"
-                  fill="#60A5FA"
-                ></path>
-              </svg>
-            </span>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.5609 10.7386L20.2009 9.15859C19.9409 8.85859 19.7309 8.29859 19.7309 7.89859V6.19859C19.7309 5.13859 18.8609 4.26859 17.8009 4.26859H16.1009C15.7109 4.26859 15.1409 4.05859 14.8409 3.79859L13.2609 2.43859C12.5709 1.84859 11.4409 1.84859 10.7409 2.43859L9.17086 3.80859C8.87086 4.05859 8.30086 4.26859 7.91086 4.26859H6.18086C5.12086 4.26859 4.25086 5.13859 4.25086 6.19859V7.90859C4.25086 8.29859 4.04086 8.85859 3.79086 9.15859L2.44086 10.7486C1.86086 11.4386 1.86086 12.5586 2.44086 13.2486L3.79086 14.8386C4.04086 15.1386 4.25086 15.6986 4.25086 16.0886V17.7986C4.25086 18.8586 5.12086 19.7286 6.18086 19.7286H7.91086C8.30086 19.7286 8.87086 19.9386 9.17086 20.1986L10.7509 21.5586C11.4409 22.1486 12.5709 22.1486 13.2709 21.5586L14.8509 20.1986C15.1509 19.9386 15.7109 19.7286 16.1109 19.7286H17.8109C18.8709 19.7286 19.7409 18.8586 19.7409 17.7986V16.0986C19.7409 15.7086 19.9509 15.1386 20.2109 14.8386L21.5709 13.2586C22.1509 12.5686 22.1509 11.4286 21.5609 10.7386ZM16.1609 10.1086L11.3309 14.9386C11.1909 15.0786 11.0009 15.1586 10.8009 15.1586C10.6009 15.1586 10.4109 15.0786 10.2709 14.9386L7.85086 12.5186C7.56086 12.2286 7.56086 11.7486 7.85086 11.4586C8.14086 11.1686 8.62086 11.1686 8.91086 11.4586L10.8009 13.3486L15.1009 9.04859C15.3909 8.75859 15.8709 8.75859 16.1609 9.04859C16.4509 9.33859 16.4509 9.81859 16.1609 10.1086Z"
+                fill="#60A5FA"
+              />
+            </svg>
           </h2>
-          <Text className="text-[13px] text-gray-200">Bridging health with technology</Text>
-        </section>
+        </div>
 
-        <section className="w-11/12 p-2">
+        {/* Navigation Links */}
+        <div className="flex items-center gap-x-2 lg:gap-x-4">
           <Link
             href="/hospital/dashboard"
-            className={`dashboard cursor-pointer  ${
+            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
               currentPath.includes("dashboard")
-                ? "text-white bg-[#60A5FA]"
-                : "bg-[#1E40AF] text-gray-200"
-            }  transition-colors flex items-center gap-x-4  p-5 rounded my-4 hover:bg-[#60A5FA] duration-100 ease-in hover:text-white`}
+                ? "text-white bg-[#60A5FA] shadow-md"
+                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
+            }`}
           >
-            <IoAnalytics className="w-6 h-6" />
-            <Text>Dashboard</Text>
+            <IoAnalytics className="w-5 h-5" />
+            <span className="hidden lg:inline font-medium">Dashboard</span>
           </Link>
 
           <Link
             href="/hospital/appointments"
-            className={`dashboard cursor-pointer  ${
+            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
               currentPath.includes("appointments")
-                ? "text-white bg-[#60A5FA]"
-                : "bg-[#1E40AF] text-gray-200"
-            }  hover:bg-[#60A5FA] duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
+                ? "text-white bg-[#60A5FA] shadow-md"
+                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
+            }`}
           >
-            <BsCameraVideo className="w-6 h-6" />
-            <Text>Appointments</Text>
+            <BsCameraVideo className="w-5 h-5" />
+            <span className="hidden lg:inline font-medium">Appointments</span>
           </Link>
 
           <Link
             href="/hospital/search"
-            className={`dashboard cursor-pointer  ${
+            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
               currentPath.includes("search")
-                ? "text-white bg-[#60A5FA]"
-                : "bg-[#1E40AF] text-gray-200"
-            } hover:bg-[#60A5FA] duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
+                ? "text-white bg-[#60A5FA] shadow-md"
+                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
+            }`}
           >
-            <FiSearch className="w-6 h-6" />
-            <Text>Find Patients</Text>
+            <FiSearch className="w-5 h-5" />
+            <span className="hidden lg:inline font-medium">Find Patients</span>
           </Link>
 
           <Link
             href="/hospital/messages"
-            className={`dashboard cursor-pointer  ${
+            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
               currentPath.includes("messages")
-                ? "text-white bg-[#60A5FA]"
-                : "bg-[#1E40AF] text-gray-200"
-            } hover:bg-[#60A5FA] duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
+                ? "text-white bg-[#60A5FA] shadow-md"
+                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
+            }`}
           >
-            <BiMessageRoundedDots className="w-6 h-6" />
-            <Text>Messages</Text>
+            <BiMessageRoundedDots className="w-5 h-5" />
+            <span className="hidden lg:inline font-medium">Messages</span>
           </Link>
 
           <Link
             href="/hospital/settings"
-            className={`dashboard cursor-pointer ${
+            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
               currentPath.includes("settings") ||
-              currentPath.includes("profile") ||
-              currentPath.includes("profile/me")
-                ? "text-white bg-[#60A5FA]"
-                : "bg-[#1E40AF] text-gray-200"
-            }  hover:bg-[#60A5FA] duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
+              currentPath.includes("profile")
+                ? "text-white bg-[#60A5FA] shadow-md"
+                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
+            }`}
           >
-            <IoSettingsOutline className="w-6 h-6" />
-            <Text>Settings</Text>
+            <IoSettingsOutline className="w-5 h-5" />
+            <span className="hidden lg:inline font-medium">Settings</span>
           </Link>
-        </section>
-      </div>
-      <section className="w-full md:w-3/4 lg:w-5/6 md:p-8 p-2 pl-1/4 overflow-y-auto ml-auto">
+        </div>
+      </nav>
+
+      {/* Main Content Area */}
+      <section className="w-full md:pt-20 p-4 md:p-8 overflow-y-auto flex-1">
         <HospitalAppHeader showWelcomeMessage={showWelcomeMesage} />
         {children}
 
