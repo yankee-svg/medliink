@@ -38,7 +38,7 @@ interface HospitalMapProps {
 const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onClose }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [L, setL] = useState<any>(null);
-  const mapKey = useRef(`map-${Date.now()}`); // Unique key for the map
+  const [mapKey, setMapKey] = useState(`map-${Date.now()}`);
 
   useEffect(() => {
     setIsMounted(true);
@@ -48,9 +48,10 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
       setL(leaflet.default);
     });
 
-    // Cleanup function to remove map container
+    // Cleanup function to force remount on next render
     return () => {
       setIsMounted(false);
+      setMapKey(`map-${Date.now()}`); // Generate new key to force remount
     };
   }, []);
 
@@ -134,9 +135,8 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
         </div>
 
         {/* Real Map */}
-        <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] z-0">
+        <div key={mapKey} className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] z-0">
           <MapContainer
-            key={mapKey.current}
             center={[userLocation.lat, userLocation.lng]}
             zoom={13}
             style={{ height: "100%", width: "100%" }}

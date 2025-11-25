@@ -168,45 +168,6 @@ const Home = () => {
                     </Button>
                   </section>
                 </section>
-
-                <section className="user-appointments">\n                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    recent appointments
-                  </h3>
-
-                  <section className="appointments mt-4">
-                    {latestAppointmentLoading ? (
-                      <LoaderSmall className="my-2" />
-                    ) : recentAppointmentInfo?.length == 0 ? (
-                      <Text className="text-center my-3">
-                        No recent appointments
-                      </Text>
-                    ) : (
-                      recentAppointmentInfo?.map(
-                        (appointment: userAppointmentInfoProps) => {
-                          return (
-                            <AppointmentLabel
-                              key={appointment._id}
-                              userType="user"
-                              status={appointment.status}
-                              attender={appointment.userId!}
-                              _id={appointment._id}
-                              href={`/hospital/appointments/${appointment._id}`}
-                              createdAt={appointment.createdAt}
-                            />
-                          );
-                        }
-                      )
-                    )}
-                    <section className="new-appointment w-full flex items-end justify-end my-5">
-                      <Button
-                        className="bg-accent"
-                        onClick={handleViewAppointmentClick}
-                      >
-                        View appointments
-                      </Button>
-                    </section>
-                  </section>
-                </section>
               </section>
 
               <section className="health-care-history w-full md:hidden my-5 p-1">

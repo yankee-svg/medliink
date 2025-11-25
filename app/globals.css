@@ -37,31 +37,7 @@
   --border-dark: rgba(0, 0, 0, 0.08);
 }
 
-/* Silver Theme */
-[data-theme="silver"] {
-  --bg-primary: #c0c0c0;
-  --bg-secondary: #d4d4d4;
-  --bg-card: #c0c0c0;
-  --bg-pressed: #a8a8a8;
-  --bg-raised: #d8d8d8;
-  
-  /* Shadow colors */
-  --shadow-dark: rgba(0, 0, 0, 0.15);
-  --shadow-light: rgba(255, 255, 255, 0.6);
-  --shadow-inset-dark: rgba(0, 0, 0, 0.08);
-  --shadow-inset-light: rgba(255, 255, 255, 0.5);
-  
-  /* Text colors - Optimized for silver theme */
-  --text-primary: #1a1a1a;
-  --text-secondary: #3a3a3a;
-  --text-muted: #5a5a5a;
-  
-  /* Border colors */
-  --border-light: rgba(255, 255, 255, 0.7);
-  --border-dark: rgba(0, 0, 0, 0.1);
-}
-
-/* Dark theme neumorphism colors - Adjusted for silver theme */
+/* Dark theme neumorphism colors */
 [data-theme="dark"] {
   --bg-primary: #2a2a2a;
   --bg-secondary: #3a3a3a;
