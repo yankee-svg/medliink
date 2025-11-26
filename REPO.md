@@ -1,21 +1,8 @@
-# Medliink Monorepo Structure
+# Medliink repo Structure
 
-This document explains the monorepo architecture of Medliink and how the frontend and backend are integrated.
+This document explains the repo architecture of Medliink and how the frontend and backend are integrated.
 
-## What is a Monorepo?
-
-A monorepo (mono-repository) is a software development strategy where code for multiple projects is stored in a single repository. For Medliink, this means both the frontend (Next.js) and backend (Express API) are in one repository instead of two separate ones.
-
-## Benefits of Our Monorepo
-
-1. **Simplified Setup** - Clone once, run one command to install everything
-2. **Synchronized Development** - Make frontend and backend changes in one place
-3. **Single Version Control** - One commit can update both frontend and backend
-4. **Easier Testing** - Test full-stack features without switching repositories
-5. **Better Code Sharing** - Share TypeScript types between frontend and backend
-6. **Simplified Deployment** - Deploy both from one repository
-
-## Repository Structure
+## Tree
 
 ```
 medliink/
@@ -64,7 +51,7 @@ medliink/
 ├── README.md                         # Main documentation
 ├── SETUP.md                          # Setup guide
 ├── QUICKSTART.md                     # Quick reference
-└── MONOREPO.md                       # This file
+└── REPO.md                       # This file
 ```
 
 ## How It Works

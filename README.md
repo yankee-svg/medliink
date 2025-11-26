@@ -63,18 +63,18 @@ The app will be available at:
 
 ## Screenshots
 
+![Login](./assets/img-0.png)
+
 ### Dashboard
+
 ![Dashboard](./assets/img-1.png)
 
 
 ### Appointments
 ![Appointments](./assets/img-2.png)
 
-### Search Hospitals
-![Search Hospitals](./assets/img-3.png)
 
-
-### Hospital Profile
+### Hospitals Profile
 ![Hospital Profile](./assets/img-4.png)
 
 
@@ -83,11 +83,11 @@ The app will be available at:
 
 
 ### Message Hospital
-![Message Hospital](./assets/img-6.png)
-
-### Message Hospital
 ![Message Hospital](./assets/img-7.png)
 
 
-### User Profile
+### User Profile settings
+
+![All Settings](./assets/img-9.png)
+
 ![User Profile](./assets/img-8.png)

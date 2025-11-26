@@ -16,15 +16,12 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("next_refresh_token")?.value;
   const tokenData: any = token && jwt.decode(token!);
 
-  console.log(`Cookie token is ${token}`);
+  // console.log(`Cookie token is ${token}`);
 
   // if it is a protected route and there is no token
   if (!tokenData) {
     if (!isPublicPath) {
       console.log("Trying to access protected route without token");
-
-      // I really don't know what's going on here but It is working on localhost, I really don't know why it isn't working on deployment
-      //anyhow sha, I would be grateful is anyone can help me fix it.
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }
