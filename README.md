@@ -79,10 +79,6 @@ The app will be available at:
 
 
 ### Messages
-![Messages](./assets/img-5.png)
-
-
-### Message Hospital
 ![Message Hospital](./assets/img-7.png)
 
 
