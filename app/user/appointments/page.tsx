@@ -29,9 +29,16 @@ const Appointment = () => {
   const [showServices, setShowServices] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
+  // Filter out cancelled appointments
+  const activeAppointments = userAppointmentInfo?.filter(
+    (appointment: any) => appointment.status !== "cancelled"
+  ) || [];
+
   useEffect(() => {
     if (data) {
-      setTotalAppointments(data?.data.length);
+      // Count only non-cancelled appointments
+      const activeCount = data?.data.filter((apt: any) => apt.status !== "cancelled").length;
+      setTotalAppointments(activeCount);
     }
   }, [data]);
 
@@ -251,19 +258,19 @@ const Appointment = () => {
              text-white rounded-full text-[12px]"
                   >
                     <span className="text-[12px]">
-                      {userAppointmentInfo?.length! > 100
+                      {activeAppointments?.length! > 100
                         ? `${99}+`
-                        : userAppointmentInfo?.length!}
+                        : activeAppointments?.length!}
                     </span>
                   </span>
                 </Text>
 
                 <section
                   className={`appointment-container w-full gap-10 ${
-                    totalAppointments !== 0 && "flex flex-col md:grid"
+                    activeAppointments.length !== 0 && "flex flex-col md:grid"
                   } sm:grid-cols-2 xl:grid-cols-3 my-8`}
                 >
-                  {totalAppointments == 0 ? (
+                  {activeAppointments.length == 0 ? (
                     <div className="w-full p-8">
                       <div className="neu-card rounded-2xl p-8 max-w-2xl">
                         <div className="mb-6">
@@ -295,22 +302,20 @@ const Appointment = () => {
                       </div>
                     </div>
                   ) : (
-                    userAppointmentInfo?.map(
-                      (appointment: AppointmentCardProps | any) => {
-                        return (
-                          <ApppointmentCard
-                            key={appointment._id}
-                            title={appointment.title}
-                            description={appointment.description}
-                            createdAt={appointment.createdAt}
-                            startDate={appointment.startDate}
-                            endDate={appointment.endDate}
-                            _id={appointment._id}
-                            userType="user"
-                          />
-                        );
-                      }
-                    )
+                    activeAppointments.map((appointment: AppointmentCardProps | any) => {
+                      return (
+                        <ApppointmentCard
+                          key={appointment._id}
+                          title={appointment.title}
+                          description={appointment.description}
+                          createdAt={appointment.createdAt}
+                          startDate={appointment.startDate}
+                          endDate={appointment.endDate}
+                          _id={appointment._id}
+                          userType="user"
+                        />
+                      );
+                    })
                   )}
                 </section>
               </div>

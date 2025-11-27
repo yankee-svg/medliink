@@ -66,8 +66,9 @@ const Appointment = () => {
                     <Text className="text-center">No appointment found!</Text>
                   </div>
                 ) : (
-                  userAppointmentInfo?.map(
-                    (appointment: AppointmentCardProps | any) => {
+                  userAppointmentInfo
+                    ?.filter((appointment: any) => appointment.status !== "cancelled")
+                    .map((appointment: AppointmentCardProps | any) => {
                       return (
                         <ApppointmentCard
                           key={appointment._id}
@@ -81,8 +82,7 @@ const Appointment = () => {
                           patientName={appointment.patientName}
                         />
                       );
-                    }
-                  )
+                    })
                 )}
               </section>
             </section>

@@ -104,7 +104,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                         </div>
                         <div className="flex items-center gap-1">
                           <HiOutlineShieldCheck className="h-4 w-4" />
-                          <span>{hospitalSearchProfileInfo?.allTotalAppointments || 0} checkups</span>
+                          <span>Verified Healthcare Provider</span>
                         </div>
                       </div>
                     </div>
@@ -113,6 +113,13 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                 
                 {/* Action Buttons */}
                 <div className="absolute top-6 right-6 flex gap-3">
+                  <a 
+                    href="tel:0788304005"
+                    className="bg-green-600/95 hover:bg-green-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:scale-105"
+                  >
+                    <HiPhone className="h-5 w-5" />
+                    Call Hospital
+                  </a>
                   <Link
                     href={`/user/search/${hospitalId}/review?hId=${hospitalSearchProfileInfo?._id}`}
                   >
@@ -255,8 +262,8 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
 
                   {/* Hospital Stats */}
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                    <h3 className="font-bold text-lg mb-4 text-gray-800">Hospital Stats</h3>
-                    <div className="grid grid-cols-2 gap-3">
+                    <h3 className="font-bold text-lg mb-4 text-gray-800">Quick Info</h3>
+                    <div className="grid grid-cols-1 gap-3">
                       <div className="text-center p-4 bg-blue-50 rounded-lg">
                         <p className="text-2xl font-bold text-blue-600">519</p>
                         <p className="text-xs text-gray-600 mt-1">Beds</p>
@@ -264,10 +271,6 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                       <div className="text-center p-4 bg-green-50 rounded-lg">
                         <p className="text-2xl font-bold text-green-600">24/7</p>
                         <p className="text-xs text-gray-600 mt-1">Service</p>
-                      </div>
-                      <div className="text-center p-4 bg-purple-50 rounded-lg">
-                        <p className="text-2xl font-bold text-purple-600">{hospitalSearchProfileInfo?.allTotalAppointments || 0}</p>
-                        <p className="text-xs text-gray-600 mt-1">Checkups</p>
                       </div>
                       <div className="text-center p-4 bg-orange-50 rounded-lg">
                         <p className="text-2xl font-bold text-orange-600">4.2</p>
@@ -289,17 +292,16 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                 </div>
               </div>
 
-              {/* Sticky Book Appointment Button */}
-              <Link href={`/user/appointments/new/${hospitalId}/submit`}>
-                <div className="fixed bottom-6 right-6 z-50">
-                  <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 hover:scale-110 hover:shadow-blue-500/50">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span>Book Appointment</span>
-                  </button>
-                </div>
-              </Link>
+              {/* Contact Actions */}
+              <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+                <a 
+                  href="tel:0788304005"
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 hover:scale-110 hover:shadow-green-500/50"
+                >
+                  <HiPhone className="w-6 h-6" />
+                  <span>Call Now</span>
+                </a>
+              </div>
             </section>
           </SidebarLayout>
         )}

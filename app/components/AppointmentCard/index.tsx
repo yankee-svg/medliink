@@ -2,6 +2,7 @@ import { formatDateTime } from "@/app/helpers";
 import {
   useGetHospitalByIdQuery,
   useGetUserByIdQuery,
+  useCancelAppointmentMutation,
 } from "@/app/store/slices/user.slice";
 import moment from "moment";
 import Link from "next/link";
@@ -9,8 +10,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsCameraVideo } from "react-icons/bs";
 import { LuTimer } from "react-icons/lu";
+import { AiOutlineClose } from "react-icons/ai";
 import Button from "../Button";
 import Text from "../Text";
+import toast from "react-hot-toast";
 
 export interface AppointmentCardProps {
   className?: string;
@@ -22,6 +25,7 @@ export interface AppointmentCardProps {
   createdAt: Date;
   userType: "user" | "hospital";
   patientName?: string;
+  onCancelled?: (id: string) => void;
 }
 
 interface AppointmentLabelProps {
@@ -44,16 +48,42 @@ const ApppointmentCard = ({
   createdAt,
   userType,
   patientName,
+  onCancelled,
 }: AppointmentCardProps) => {
   const startFormattedTime = formatDateTime(startDate);
   const endFormattedTime = formatDateTime(endDate);
 
   const router = useRouter();
+  const [cancelAppointment, { isLoading: isCancelling }] = useCancelAppointmentMutation();
+  const [isCancelled, setIsCancelled] = useState(false);
 
   const appointmentLink = `/${userType}/appointments/${_id}`;
 
-  const handleAppointmentClick = () => {
-    router.push(appointmentLink);
+  const handleCancelClick = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigating to details page
+    
+    if (!window.confirm("Are you sure you want to cancel this appointment?")) {
+      return;
+    }
+
+    // Immediately show cancelled state
+    setIsCancelled(true);
+
+    try {
+      const response: any = await cancelAppointment({ id: _id }).unwrap();
+      toast.success(response?.data?.message || "Appointment cancelled successfully");
+      // Reload after showing cancelled state
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error: any) {
+      // Even on error, keep the blurred state and show error message
+      toast.error(error?.data?.message || error?.message || "Failed to cancel appointment");
+      // Still reload to refresh the list
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
   };
 
   // Extract patient name from title or description
@@ -61,10 +91,32 @@ const ApppointmentCard = ({
     (title?.includes(' - ') ? title.split(' - ')[1] : null) ||
     (description?.includes('Patient: ') ? description.split('Patient: ')[1]?.split(' |')[0] : null);
 
+  // If cancelled, show cancelled state briefly before removal
+  if (isCancelled) {
+    return (
+      <section
+        className="appointment-one bg-gray-100 rounded p-3 w-full md:w-96 my-2 opacity-50 relative"
+      >
+        <div className="absolute inset-0 bg-gray-900 bg-opacity-60 rounded flex items-center justify-center">
+          <div className="bg-white rounded-xl p-4 text-center">
+            <div className="text-green-600 font-bold text-lg mb-1">✓ Cancelled</div>
+            <Text className="text-sm text-gray-600">Appointment has been cancelled</Text>
+          </div>
+        </div>
+        <h3 className="text-[18px] capitalize font-bold my-2 blur-sm">
+          {title}
+        </h3>
+        <Text className="text-sm text-slate-700 blur-sm">
+          {startFormattedTime.dateMonthYear}
+        </Text>
+        <Text className="text-sm my-3 md:my-2 blur-sm">{description}</Text>
+      </section>
+    );
+  }
+
   return (
     <section
-      className="appointment-one bg-gray-100  rounded p-3 w-full md:w-96 cursor-pointer my-2"
-      onClick={handleAppointmentClick}
+      className="appointment-one bg-gray-100 rounded p-3 w-full md:w-96 my-2"
     >
       <h3 className="text-[18px] capitalize font-bold my-2 flex items-center justify-between">
         {title}{" "}
@@ -96,10 +148,14 @@ const ApppointmentCard = ({
       <Text className="text-sm my-3 md:my-2">{description}</Text>
 
       <section className="button-container my-2 mt-3">
-        <Link href={appointmentLink}>
-          {" "}
-          <Button>appointment details</Button>
-        </Link>
+        <button
+          onClick={handleCancelClick}
+          disabled={isCancelling}
+          className="w-full px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <AiOutlineClose className="w-4 h-4" />
+          {isCancelling ? "Cancelling..." : "Cancel Appointment"}
+        </button>
       </section>
     </section>
   );

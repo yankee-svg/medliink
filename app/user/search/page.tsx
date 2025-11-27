@@ -241,6 +241,8 @@ const SearchHospitals = () => {
                         key={hospital._id}
                         href={`/user/search/${hospital._id}`}
                         website={hospital.website}
+                        email={hospital.email}
+                        phone={hospital.phone || "0788304005"}
                       />
                     );
                   })

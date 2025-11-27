@@ -55,18 +55,6 @@ const SidebarLayout = ({
           </Link>
 
           <Link
-            href="/user/appointments"
-            className={`dashboard cursor-pointer  ${
-              currentPath.includes("appointments")
-                ? "text-white bg-accent"
-                : "bg-gray-200"
-            }  hover:bg-accent duration-100 ease-in hover:text-white transition-colors flex items-center gap-x-4 p-5 rounded my-4`}
-          >
-            <BsCameraVideo className="w-6 h-6" />
-            <Text>Appointments</Text>
-          </Link>
-
-          <Link
             href="/user/search"
             className={`dashboard cursor-pointer  ${
               currentPath.includes("search")
@@ -168,18 +156,6 @@ export const HospitalSidebarNav = ({
           >
             <IoAnalytics className="w-5 h-5" />
             <span className="hidden lg:inline font-medium">Dashboard</span>
-          </Link>
-
-          <Link
-            href="/hospital/appointments"
-            className={`cursor-pointer flex items-center gap-x-2 px-4 lg:px-6 py-3 rounded-lg transition-all duration-200 ${
-              currentPath.includes("appointments")
-                ? "text-white bg-[#60A5FA] shadow-md"
-                : "bg-[#1E40AF] text-gray-200 hover:bg-[#60A5FA] hover:text-white"
-            }`}
-          >
-            <BsCameraVideo className="w-5 h-5" />
-            <span className="hidden lg:inline font-medium">Appointments</span>
           </Link>
 
           <Link

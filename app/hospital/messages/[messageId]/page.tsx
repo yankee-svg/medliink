@@ -46,6 +46,13 @@ const MessagesContent = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const [messages, setMessages] = useState<currentTypingMessaageProps[]>([]);
+  const [formData, setFormData] = useState({
+    typedMessage: "",
+  });
+  const [isConnected, setIsConnected] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
   useEffect(() => {
     if (userData) {
       setFetchedUserData(userData?.data);
@@ -55,9 +62,34 @@ const MessagesContent = () => {
     }
   }, [userData, roomIdData]);
 
+  // Socket connection status
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log('Socket connected');
+      setIsConnected(true);
+    };
+
+    const handleDisconnect = () => {
+      console.log('Socket disconnected');
+      setIsConnected(false);
+    };
+
+    socket.on('connect', handleConnect);
+    socket.on('disconnect', handleDisconnect);
+
+    // Check initial connection state
+    setIsConnected(socket.connected);
+
+    return () => {
+      socket.off('connect', handleConnect);
+      socket.off('disconnect', handleDisconnect);
+    };
+  }, []);
+
   // Separate effect to join room after roomToken is set
   useEffect(() => {
-    if (roomToken) {
+    if (roomToken && isConnected) {
+      console.log('Joining room:', roomToken);
       //Join the chat
       socket.emit("joinRoom", roomToken);
 
@@ -68,16 +100,21 @@ const MessagesContent = () => {
         setMessages(data);
       });
 
+      socket.on('roomJoined', (data) => {
+        console.log('Successfully joined room:', data);
+      });
+
+      socket.on('error', (error) => {
+        console.error('Socket error:', error);
+      });
+
       return () => {
         socket.off("chatHistory");
+        socket.off('roomJoined');
+        socket.off('error');
       };
     }
-  }, [roomToken]);
-
-  const [messages, setMessages] = useState<currentTypingMessaageProps[]>([]);
-  const [formData, setFormData] = useState({
-    typedMessage: "",
-  });
+  }, [roomToken, isConnected]);
 
   const handleInputChange = (e: React.FormEvent<HTMLFormElement> | any) => {
     const { name, value } = e.target;
@@ -105,17 +142,30 @@ const MessagesContent = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
 
+    if (formData.typedMessage.trim() === "") return;
+    if (!isConnected) {
+      console.error('Cannot send message: Not connected to server');
+      return;
+    }
+
     const data = {
       roomId: roomToken,
       sender: userDashboardInfo?._id,
       receiver: userId,
-      message: formData.typedMessage,
+      message: formData.typedMessage.trim(),
     };
 
-    if (formData.typedMessage == "") return;
+    setIsSending(true);
 
     //send the message
-    socket.emit("sendMessage", data);
+    socket.emit("sendMessage", data, (response: any) => {
+      setIsSending(false);
+      if (response?.error) {
+        console.error('Failed to send message:', response.error);
+      } else {
+        console.log('Message sent successfully');
+      }
+    });
 
     setFormData({ typedMessage: "" });
   };
@@ -178,9 +228,19 @@ const MessagesContent = () => {
                     </div>
                   </div>
 
-                  <Text className="font-semibold">
-                    {fetchedUserData?.name}
-                  </Text>
+                  <div>
+                    <Text className="font-semibold">
+                      {fetchedUserData?.name}
+                    </Text>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className={`w-2 h-2 rounded-full ${
+                        isConnected ? 'bg-green-500' : 'bg-red-500'
+                      }`} />
+                      <Text className="text-xs text-gray-500">
+                        {isConnected ? 'Connected' : 'Disconnected'}
+                      </Text>
+                    </div>
+                  </div>
                 </section>
 
                 <section className="second-section px-4">
@@ -237,7 +297,7 @@ const MessagesContent = () => {
                   >
                     <div className="relative w-full ">
                       <textarea
-                        placeholder="Type a message..."
+                        placeholder={isConnected ? "Type a message..." : "Connecting..."}
                         rows={1}
                         spellCheck="false"
                         name="typedMessage"
@@ -245,24 +305,33 @@ const MessagesContent = () => {
                         onChange={handleInputChange}
                         onKeyDown={handleKeyPress}
                         tabIndex={0}
-                        className="w-full outline-none border-2 border-purple-300 focus:border-accent hover:border-accent transition-all duration-150 ease-in p-4 rounded-[30px] block"
+                        disabled={!isConnected || isSending}
+                        className="w-full outline-none border-2 border-purple-300 focus:border-accent hover:border-accent transition-all duration-150 ease-in p-4 rounded-[30px] block disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                       <button
                         type="submit"
-                        className="absolute top-1/2 right-3 transform -translate-y-1/2 px-5 rounded-full"
+                        disabled={!isConnected || isSending || !formData.typedMessage.trim()}
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 px-5 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          className="text-accent"
-                        >
-                          <path
-                            d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
+                        {isSending ? (
+                          <svg className="animate-spin h-6 w-6 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            className="text-accent"
+                          >
+                            <path
+                              d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+                        )}
                       </button>
                     </div>
                   </form>

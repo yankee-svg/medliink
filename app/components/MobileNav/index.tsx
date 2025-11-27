@@ -33,16 +33,6 @@ const MobileNav = ({ className, children, ...others }: MobileNavProps) => {
       </Link>
 
       <Link
-        href={"/user/appointments"}
-        className={`${
-          currentPath.includes("appointments") && "text-secondary"
-        } transition-colors hover:text-secondary duration-100 ease-in flex flex-col items-center justify-center gap-y-2`}
-      >
-        <BsCameraVideo className="h-5 w-5" />
-        <Text className="text-[12px]">Appointments</Text>
-      </Link>
-
-      <Link
         href={"/user/messages"}
         className={`${
           currentPath.includes("messages") && "text-secondary"
@@ -92,16 +82,6 @@ export const HospitalMobileNav = ({
       >
         <IoAnalytics className="h-5 w-5" />
         <Text className="text-[12px]">Dashboard</Text>
-      </Link>
-
-      <Link
-        href={"/hospital/appointments"}
-        className={`${
-          currentPath.includes("appointments") && "text-secondary"
-        } transition-colors hover:text-secondary duration-100 ease-in flex flex-col items-center justify-center gap-y-2`}
-      >
-        <BsCameraVideo className="h-5 w-5" />
-        <Text className="text-[12px]">Appointments</Text>
       </Link>
 
       <Link

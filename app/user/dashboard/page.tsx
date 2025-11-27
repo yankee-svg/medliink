@@ -18,6 +18,7 @@ import {
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BiMessageRoundedDots } from "react-icons/bi";
 import { BsCameraVideo } from "react-icons/bs";
 import { HiOutlineShieldCheck } from "react-icons/hi";
 import { SlBadge } from "react-icons/sl";
@@ -342,31 +343,34 @@ const Home = () => {
                 </section>
 
                 <section className="stats-container grid p-1 lg:grid-cols-3 gap-10 w-full">
-                  <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
-                    <BsCameraVideo className="w-8 h-8" />
+                  <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in"
+                    onClick={() => router.push('/user/messages')}>
+                    <BiMessageRoundedDots className="w-8 h-8" />
                     <Text>
-                      {userDashboardInfo?.appointments?.length}{" "}
-                      {userDashboardInfo?.appointments?.length! > 1
-                        ? "Active Bookings"
-                        : "Active Booking"}
+                      {userDashboardInfo?.messages?.length || 0}{" "}
+                      {(userDashboardInfo?.messages?.length || 0) !== 1
+                        ? "Active Conversations"
+                        : "Active Conversation"}
                     </Text>
                   </section>
 
                   <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
-                    <HiOutlineShieldCheck className="w-8 h-8" />
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
                     <Text>
-                      {userDashboardInfo?.allTotalAppointments} Total{" "}
-                      {userDashboardInfo?.allTotalAppointments! > 1
-                        ? "Consultations"
-                        : "Consultation"}
+                      {userDashboardInfo?.totalCalls || 0} Total{" "}
+                      {(userDashboardInfo?.totalCalls || 0) !== 1
+                        ? "Calls"
+                        : "Call"}
                     </Text>
                   </section>
 
                   <section className="neu-soft h-28 w-52 rounded my-5 flex items-center flex-col justify-around cursor-pointer hover:bg-accent hover:text-white transition-colors duration-100 ease-in">
                     <SlBadge className="w-8 h-8" />
                     <Text>
-                      {userDashboardInfo?.reviews?.length} Provider{" "}
-                      {userDashboardInfo?.reviews?.length! > 1
+                      {userDashboardInfo?.reviews?.length || 0} Provider{" "}
+                      {(userDashboardInfo?.reviews?.length || 0) !== 1
                         ? "Reviews"
                         : "Review"}
                     </Text>
@@ -375,57 +379,6 @@ const Home = () => {
               </section>
 
               <section className="second-section w-full xl:w-4/12 mt-16 md:mt-0 grid grid-cols-1 items-center justify-center p-2">
-                <section className="user-appointments">
-                  <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
-                    Recent Bookings
-                  </h3>
-
-                  <section className="appointments mt-4">
-                    {latestAppointmentLoading ? (
-                      <LoaderSmall className="my-2" />
-                    ) : recentAppointmentInfo?.length == 0 ? (
-                      <div className="my-5 p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-blue-50 border border-gray-200">
-                        <div className="flex flex-col items-center justify-center text-center">
-                          <svg className="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          <Text className="text-gray-600 mb-3">
-                            No bookings yet
-                          </Text>
-                          <Text className="text-sm text-gray-500 mb-4">
-                            Connect with healthcare providers
-                          </Text>
-                        </div>
-                      </div>
-                    ) : (
-                      recentAppointmentInfo?.map(
-                        (appointment: userAppointmentInfoProps) => {
-                          return (
-                            <AppointmentLabel
-                              key={appointment._id}
-                              userType="hospital"
-                              status={appointment.status}
-                              attender={appointment.hospitalId}
-                              _id={appointment._id}
-                              href={`/user/appointments/${appointment._id}`}
-                              createdAt={appointment.createdAt}
-                            />
-                          );
-                        }
-                      )
-                    )}
-                    <section className="new-appointment w-full flex items-end justify-end my-5">
-                      <Button
-                        className="bg-accent"
-                        onClick={handleNewAppointmentClick}
-                      >
-                        Book Appointment
-                      </Button>
-                    </section>
-                  </section>
-                </section>
-                <br />
-                <br />
                 <section className="connected-providers">
                   <h3 className="font-bold capitalize text-[18px] md:text-[20px]">
                     Connected Providers
