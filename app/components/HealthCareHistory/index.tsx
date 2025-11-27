@@ -23,7 +23,8 @@ const HealthcareStatCard = ({
   trend, 
   color = "blue",
   backgroundImage,
-  iconBg = "bg-white"
+  iconBg = "bg-white",
+  onClick
 }: {
   title: string;
   value: string | number;
@@ -33,6 +34,7 @@ const HealthcareStatCard = ({
   color?: "blue" | "green" | "purple" | "orange" | "red";
   backgroundImage?: string;
   iconBg?: string;
+  onClick?: () => void;
 }) => {
   const colorClasses = {
     blue: "from-blue-50 to-blue-100 border-blue-200",
@@ -49,7 +51,8 @@ const HealthcareStatCard = ({
   };
 
   return (
-    <div className={`
+    <div 
+      className={`
       ${colorClasses[color]} 
       bg-gradient-to-br border rounded-2xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer 
       relative overflow-hidden h-60 min-h-[240px] group
@@ -60,6 +63,7 @@ const HealthcareStatCard = ({
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     } : {}}
+    onClick={onClick}
     >
       {/* Background Image Overlay */}
       {backgroundImage && (
@@ -211,6 +215,9 @@ const HealthcareHistoryDashboard = ({
   todayAppointments = 23, 
   successRate = 94.2, 
   avgWaitTime = 12,
+  onTotalPatientsClick,
+  showPatientPreview = false,
+  patientsData = [],
   recentActivities = [
     { title: "New Patient Registration", description: "John Doe registered for consultation", time: "2 minutes ago" },
     { title: "Appointment Completed", description: "Dr. Smith completed consultation with patient", time: "15 minutes ago" },
@@ -229,6 +236,9 @@ const HealthcareHistoryDashboard = ({
   todayAppointments?: number;
   successRate?: number;
   avgWaitTime?: number;
+  onTotalPatientsClick?: () => void;
+  showPatientPreview?: boolean;
+  patientsData?: any[];
   recentActivities?: any[];
   healthMetrics?: any[];
 }) => {
@@ -244,6 +254,7 @@ const HealthcareHistoryDashboard = ({
           icon={<HiUserGroup className="w-8 h-8 text-blue-600" />}
           color="blue"
           iconBg="bg-white"
+          onClick={onTotalPatientsClick}
         />
         <HealthcareStatCard
           title="Today's Appointments"
@@ -275,6 +286,52 @@ const HealthcareHistoryDashboard = ({
           iconBg="bg-white"
         />
       </div>
+
+      {/* Patient Preview Section */}
+      {showPatientPreview && patientsData.length > 0 && (
+        <div className="bg-white rounded-xl border shadow-sm p-6 animate-fadeIn">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+            <LuUsers className="w-5 h-5 mr-2 text-blue-600" />
+            Recent Patients ({patientsData.length} total)
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {patientsData.slice(0, 6).map((patient: any) => (
+              <Link 
+                key={patient._id} 
+                href={`/hospital/search/${patient._id}`}
+                className="flex items-center gap-x-3 p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200 border border-gray-200"
+              >
+                <div className={`avatar ${patient?.online ? 'online' : 'offline'}`}>
+                  <div className="w-12 h-12 rounded-full">
+                    <img src={patient?.profilePicture} alt={patient?.name} />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-sm text-gray-900 truncate">{patient?.name}</h4>
+                  <p className="text-xs text-gray-500 truncate">{patient?.email}</p>
+                  {patient?.isVerified && (
+                    <span className="inline-flex items-center text-xs text-blue-600">
+                      <HiCheckCircle className="w-3 h-3 mr-1" />
+                      Verified
+                    </span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+          {patientsData.length > 6 && (
+            <div className="mt-4 text-center">
+              <Link 
+                href="/hospital/search" 
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium inline-flex items-center"
+              >
+                View All {patientsData.length} Patients
+                <HiTrendingUp className="w-4 h-4 ml-1 rotate-90" />
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

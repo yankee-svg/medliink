@@ -30,6 +30,7 @@ import { HospitalDashboardQuickActions } from "@/app/components/DashboardQuickAc
 import { HealthcareHistoryDashboard } from "@/app/components/HealthCareHistory";
 import Seo from "@/app/components/Seo/Seo";
 import { FaStar } from "react-icons/fa";
+import { useState } from "react";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,6 +39,7 @@ const Home = () => {
   const { userInfo } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const healthCareHistoryRef = useRef<HTMLDivElement | any>(null);
+  const [showPatientPreview, setShowPatientPreview] = useState(false);
 
   let dataToPass = {
     id: userInfo?._id,
@@ -121,6 +123,9 @@ const Home = () => {
                     todayAppointments={userDashboardInfo?.appointments?.length || 0}
                     successRate={94.2}
                     avgWaitTime={12}
+                    onTotalPatientsClick={() => setShowPatientPreview(!showPatientPreview)}
+                    showPatientPreview={showPatientPreview}
+                    patientsData={allUsersData?.data || []}
                   />
                 </section>
               </section>
@@ -177,6 +182,9 @@ const Home = () => {
                   todayAppointments={userDashboardInfo?.appointments?.length || 0}
                   successRate={94.2}
                   avgWaitTime={12}
+                  onTotalPatientsClick={() => setShowPatientPreview(!showPatientPreview)}
+                  showPatientPreview={showPatientPreview}
+                  patientsData={allUsersData?.data || []}
                 />
               </section>
             </section>
