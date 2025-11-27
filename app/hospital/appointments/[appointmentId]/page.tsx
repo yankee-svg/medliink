@@ -238,12 +238,16 @@ const Appointment = ({ params }: { params: { appointmentId: string } }) => {
                 <h3 className="font-bold text-[17px]  capitalize">details</h3>
 
                 {(() => {
-                  // Extract patient name from title or description
-                  const patientName = userSpecificAppointmentInfo?.patientName || 
-                    (userSpecificAppointmentInfo?.title?.includes(' - ') ? 
-                      userSpecificAppointmentInfo.title.split(' - ')[1] : null) ||
-                    (userSpecificAppointmentInfo?.description?.includes('Patient: ') ? 
-                      userSpecificAppointmentInfo.description.split('Patient: ')[1]?.split(' |')[0] : null);
+                  // Extract patient name from title or description.
+                  // Cast to `any` for optional frontend-only field so TypeScript doesn't error.
+                  const appointmentAny = userSpecificAppointmentInfo as any;
+                  const patientName = appointmentAny?.patientName ||
+                    (userSpecificAppointmentInfo?.title?.includes(' - ')
+                      ? userSpecificAppointmentInfo.title.split(' - ')[1]
+                      : null) ||
+                    (userSpecificAppointmentInfo?.description?.includes('Patient: ')
+                      ? userSpecificAppointmentInfo.description.split('Patient: ')[1]?.split(' |')[0]
+                      : null);
                   
                   return patientName ? (
                     <section className="flex items-center justify-center gap-x-2 my-1 bg-blue-50 p-2 rounded-lg w-full">
