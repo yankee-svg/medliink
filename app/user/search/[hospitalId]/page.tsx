@@ -33,7 +33,7 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
     if (data) {
       dispatch(saveHospitalSearchProfileInfo(data.data));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   const handleSearchHospitals = () => {
     router.back();
@@ -289,10 +289,17 @@ const HospitalProfile = ({ params }: { params: Promise<{ hospitalId: string }> }
                 </div>
               </div>
 
-              {/* Sticky Appointment Button */}
-              <div className="fixed bottom-6 right-6 z-50">
-                <AppointmentButton />
-              </div>
+              {/* Sticky Book Appointment Button */}
+              <Link href={`/user/appointments/new/${hospitalId}/submit`}>
+                <div className="fixed bottom-6 right-6 z-50">
+                  <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 hover:scale-110 hover:shadow-blue-500/50">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Book Appointment</span>
+                  </button>
+                </div>
+              </Link>
             </section>
           </SidebarLayout>
         )}

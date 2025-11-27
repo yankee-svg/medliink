@@ -21,6 +21,7 @@ export interface AppointmentCardProps {
   _id: string;
   createdAt: Date;
   userType: "user" | "hospital";
+  patientName?: string;
 }
 
 interface AppointmentLabelProps {
@@ -42,6 +43,7 @@ const ApppointmentCard = ({
   _id,
   createdAt,
   userType,
+  patientName,
 }: AppointmentCardProps) => {
   const startFormattedTime = formatDateTime(startDate);
   const endFormattedTime = formatDateTime(endDate);
@@ -53,6 +55,11 @@ const ApppointmentCard = ({
   const handleAppointmentClick = () => {
     router.push(appointmentLink);
   };
+
+  // Extract patient name from title or description
+  const extractedPatientName = patientName || 
+    (title?.includes(' - ') ? title.split(' - ')[1] : null) ||
+    (description?.includes('Patient: ') ? description.split('Patient: ')[1]?.split(' |')[0] : null);
 
   return (
     <section
@@ -66,6 +73,21 @@ const ApppointmentCard = ({
           {moment(new Date(createdAt)).startOf("seconds").fromNow()}
         </div>
       </h3>
+      
+      {extractedPatientName && userType === "hospital" && (
+        <div className="flex items-center gap-2 mb-2 bg-blue-50 p-2 rounded-lg">
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-sm">
+              {extractedPatientName.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <div>
+            <Text className="text-xs text-gray-500">Patient</Text>
+            <Text className="text-sm font-semibold text-gray-900">{extractedPatientName}</Text>
+          </div>
+        </div>
+      )}
+      
       <Text className="text-sm text-slate-700">
         {startFormattedTime.dateMonthYear} ({startFormattedTime.hoursAndMinutes}
         {" - "} {endFormattedTime.hoursAndMinutes})

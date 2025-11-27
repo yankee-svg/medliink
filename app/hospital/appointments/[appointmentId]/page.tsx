@@ -237,6 +237,29 @@ const Appointment = ({ params }: { params: { appointmentId: string } }) => {
               <section className="appointment-details  flex flex-col items-start my-5 md:w-1/2 xl:w-2/4">
                 <h3 className="font-bold text-[17px]  capitalize">details</h3>
 
+                {(() => {
+                  // Extract patient name from title or description
+                  const patientName = userSpecificAppointmentInfo?.patientName || 
+                    (userSpecificAppointmentInfo?.title?.includes(' - ') ? 
+                      userSpecificAppointmentInfo.title.split(' - ')[1] : null) ||
+                    (userSpecificAppointmentInfo?.description?.includes('Patient: ') ? 
+                      userSpecificAppointmentInfo.description.split('Patient: ')[1]?.split(' |')[0] : null);
+                  
+                  return patientName ? (
+                    <section className="flex items-center justify-center gap-x-2 my-1 bg-blue-50 p-2 rounded-lg w-full">
+                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">
+                          {patientName.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <Text className="text-xs text-gray-500">Patient Name</Text>
+                        <Text className="text-sm font-semibold">{patientName}</Text>
+                      </div>
+                    </section>
+                  ) : null;
+                })()}
+
                 <section className="flex items-center justify-center gap-x-2 my-1">
                   <MdOutlineTitle className="w-5 h-5" />
                   <Text className="text-sm">

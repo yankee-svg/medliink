@@ -42,8 +42,6 @@ const Messages = () => {
                     </Text>
                   ) : (
                     allUsersData?.data?.map((user: any) => {
-                      const lastMessage = user?.messages?.[user?.messages?.length - 1];
-                      
                       return (
                         <Link
                           key={user._id}
@@ -76,7 +74,7 @@ const Messages = () => {
                                 )}
                               </h2>
                               <Text className="text-[12px] text-gray-600 truncate">
-                                {lastMessage?.message || "Click to start a conversation"}
+                                Message conversation with {user?.name}
                               </Text>
                             </div>
                           </section>

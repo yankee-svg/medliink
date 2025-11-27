@@ -52,18 +52,27 @@ const MessagesContent = () => {
     }
     if (roomIdData) {
       dispatch(saveRoomToken(roomIdData.data.roomId));
+    }
+  }, [hospitalData, roomIdData]);
 
+  // Separate effect to join room after roomToken is set
+  useEffect(() => {
+    if (roomToken) {
       //Join the chat
       socket.emit("joinRoom", roomToken);
 
       socket.on("chatHistory", (data) => {
         //get the chat history
-
+        console.log("Chat history received:", data);
         //set the messages
         setMessages(data);
       });
+
+      return () => {
+        socket.off("chatHistory");
+      };
     }
-  }, [hospitalData, roomIdData]);
+  }, [roomToken]);
 
   const [messages, setMessages] = useState<currentTypingMessaageProps[]>([]);
   const [formData, setFormData] = useState({
