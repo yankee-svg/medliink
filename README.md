@@ -61,6 +61,16 @@ The app will be available at:
 - Frontend: http://localhost:3000
 - Backend: http://localhost:5000
 
+## Test Accounts
+
+### Patient Account
+- **Username**: chuk@gmail.org
+- **Password**: 123456
+
+### Healthcare Provider Account
+- **Username**: emerybarame60@gmail.com
+- **Password**: 321123
+
 ## Screenshots
 
 ![Login](./assets/img-0.png)
