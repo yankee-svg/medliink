@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false, // Disable strict mode to prevent Leaflet map reinitialization errors
   images: {
     remotePatterns: [
       {

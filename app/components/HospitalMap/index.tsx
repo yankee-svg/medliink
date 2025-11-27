@@ -35,26 +35,8 @@ interface HospitalMapProps {
   onClose: () => void;
 }
 
-const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onClose }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [L, setL] = useState<any>(null);
-  const [mapKey, setMapKey] = useState(`map-${Date.now()}`);
-
-  useEffect(() => {
-    setIsMounted(true);
-    
-    // Dynamically import Leaflet only on client side
-    import('leaflet').then((leaflet) => {
-      setL(leaflet.default);
-    });
-
-    // Cleanup function to force remount on next render
-    return () => {
-      setIsMounted(false);
-      setMapKey(`map-${Date.now()}`); // Generate new key to force remount
-    };
-  }, []);
-
+// Inner Map Component that handles the actual map rendering
+const MapContent = ({ hospitals, userLocation, L }: { hospitals: Hospital[], userLocation: { lat: number; lng: number }, L: any }) => {
   // Fix for default marker icons in Leaflet
   const createCustomIcon = (isUser: boolean = false) => {
     if (!L) return null;
@@ -87,7 +69,103 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
     };
   };
 
-  if (!isMounted || !L) {
+  return (
+    <MapContainer
+      center={[userLocation.lat, userLocation.lng]}
+      zoom={13}
+      style={{ height: "100%", width: "100%" }}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      {/* User Location Marker */}
+      <Marker
+        position={[userLocation.lat, userLocation.lng]}
+        icon={createCustomIcon(true)}
+      >
+        <Popup>
+          <div className="text-center">
+            <p className="font-bold text-blue-600">You are here</p>
+            <p className="text-xs text-gray-600">Current Location</p>
+          </div>
+        </Popup>
+      </Marker>
+
+      {/* Hospital Markers */}
+      {hospitals.map((hospital, index) => {
+        const position = getHospitalPosition(index);
+        const distance = (Math.random() * 4 + 1).toFixed(1); // Mock distance
+
+        return (
+          <Marker
+            key={hospital._id}
+            position={[position.lat, position.lng]}
+            icon={createCustomIcon(false)}
+          >
+            <Popup>
+              <div className="min-w-[200px]">
+                <h4 className="font-bold text-gray-800 mb-1">{hospital.clinicName}</h4>
+                <p className="text-xs text-gray-600 mb-2">
+                  {hospital.location || 'Location not specified'}
+                </p>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-blue-600 font-semibold">~{distance} km away</span>
+                  {hospital.isVerified && (
+                    <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                      Verified
+                    </span>
+                  )}
+                </div>
+                <a
+                  href={`/user/search/${hospital._id}`}
+                  className="block text-xs bg-blue-600 text-white text-center py-1.5 rounded hover:bg-blue-700 transition-colors"
+                >
+                  View Details
+                </a>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+    </MapContainer>
+  );
+};
+
+const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onClose }) => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [L, setL] = useState<any>(null);
+  const [shouldRenderMap, setShouldRenderMap] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const hasInitializedRef = useRef(false);
+  const mapIdRef = useRef(`map-${Math.random().toString(36).substring(7)}-${Date.now()}`);
+
+  useEffect(() => {
+    // Only initialize once
+    if (hasInitializedRef.current) return;
+    
+    hasInitializedRef.current = true;
+    setIsMounted(true);
+    
+    // Dynamically import Leaflet only on client side
+    import('leaflet').then((leaflet) => {
+      setL(leaflet.default);
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        setShouldRenderMap(true);
+      }, 100);
+    });
+
+    return () => {
+      // Cleanup on unmount
+      setShouldRenderMap(false);
+      hasInitializedRef.current = false;
+    };
+  }, []);
+
+  if (!isMounted || !L || !shouldRenderMap) {
     return (
       <section className="map-section mb-4 md:mb-8 animate-fadeIn">
         <div className="neu-card rounded-2xl md:rounded-3xl overflow-hidden p-6 md:p-8 text-center">
@@ -134,69 +212,9 @@ const HospitalMap: React.FC<HospitalMapProps> = ({ hospitals, userLocation, onCl
           </button>
         </div>
 
-        {/* Real Map */}
-        <div key={mapKey} className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] z-0">
-          <MapContainer
-            center={[userLocation.lat, userLocation.lng]}
-            zoom={13}
-            style={{ height: "100%", width: "100%" }}
-            scrollWheelZoom={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {/* User Location Marker */}
-            <Marker
-              position={[userLocation.lat, userLocation.lng]}
-              icon={createCustomIcon(true)}
-            >
-              <Popup>
-                <div className="text-center">
-                  <p className="font-bold text-blue-600">You are here</p>
-                  <p className="text-xs text-gray-600">Current Location</p>
-                </div>
-              </Popup>
-            </Marker>
-
-            {/* Hospital Markers */}
-            {hospitals.map((hospital, index) => {
-              const position = getHospitalPosition(index);
-              const distance = (Math.random() * 4 + 1).toFixed(1); // Mock distance
-
-              return (
-                <Marker
-                  key={hospital._id}
-                  position={[position.lat, position.lng]}
-                  icon={createCustomIcon(false)}
-                >
-                  <Popup>
-                    <div className="min-w-[200px]">
-                      <h4 className="font-bold text-gray-800 mb-1">{hospital.clinicName}</h4>
-                      <p className="text-xs text-gray-600 mb-2">
-                        {hospital.location || 'Location not specified'}
-                      </p>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs text-blue-600 font-semibold">~{distance} km away</span>
-                        {hospital.isVerified && (
-                          <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                            Verified
-                          </span>
-                        )}
-                      </div>
-                      <a
-                        href={`/user/search/${hospital._id}`}
-                        className="block text-xs bg-blue-600 text-white text-center py-1.5 rounded hover:bg-blue-700 transition-colors"
-                      >
-                        View Details
-                      </a>
-                    </div>
-                  </Popup>
-                </Marker>
-              );
-            })}
-          </MapContainer>
+        {/* Real Map - Only render when ready */}
+        <div id={mapIdRef.current} className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] z-0">
+          <MapContent hospitals={hospitals} userLocation={userLocation} L={L} />
 
           {/* Map Legend */}
           <div className="absolute bottom-2 left-2 md:bottom-4 md:left-4 bg-white rounded-lg shadow-lg p-2 md:p-3 text-xs z-[1000]">
