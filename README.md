@@ -88,5 +88,6 @@ The app will be available at:
 
 ![User Profile](./assets/img-8.png)
 
-### src document
-[https://docs.google.com/document/d/1wrWeo49uevmkeFqwhYxFAg4Dci9W9UUwEZH1Z5St8hY/edit?usp=sharing](link)
+## Documentation
+
+**SRC Document**: [View Project Documentation](https://docs.google.com/document/d/1wrWeo49uevmkeFqwhYxFAg4Dci9W9UUwEZH1Z5St8hY/edit?usp=sharing)
